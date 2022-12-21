@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>Hexo Pure主题修改日记 | Solomon</title>
+  <meta name="description" content="1.添加背景动画背景动画基于canvas，在\themes\pure\layout\layout.ejs中添加 12345678&lt;!-- 背景动画 --&gt;  &lt;script type&#x3D;&quot;text&#x2F;javascript&quot; color&#x3D;&quot;0,0,0&quot; opacity&#x3D;&amp;#x27;0.8&amp;#x27; zIndex&#x3D;&quot;-2&quot; c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo Pure主题修改日记">
+<meta property="og:url" content="http://example.com/2022/10/31/Hexo/Hexo%20Pure%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9%E6%97%A5%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Solomon">
+<meta property="og:description" content="1.添加背景动画背景动画基于canvas，在\themes\pure\layout\layout.ejs中添加 12345678&lt;!-- 背景动画 --&gt;  &lt;script type&#x3D;&quot;text&#x2F;javascript&quot; color&#x3D;&quot;0,0,0&quot; opacity&#x3D;&amp;#x27;0.8&amp;#x27; zIndex&#x3D;&quot;-2&quot; c">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-10-30T18:10:22.000Z">
+<meta property="article:modified_time" content="2022-11-06T20:12:17.107Z">
+<meta property="article:author" content="Solomon">
+<meta property="article:tag" content="Hexo">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2022/10/31/Hexo/Hexo%20Pure%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9%E6%97%A5%E8%AE%B0/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Solomon" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/1024-byteeeee" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Solomon</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">生命的遗产是对知识的更新</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> A Minecraft Server, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/1024-byteeeee" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                这里是Solomon的博客<br>欢迎加入A Minecraft Server技术生存服务器<br>官网：mcams.club
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HCIP-datacom/">HCIP-datacom</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C%E5%B7%A5%E7%A8%8B%EF%BC%88%E6%9D%82%E9%A1%B9%EF%BC%89/">网络工程（杂项）</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HCIP-datacom/" rel="tag">HCIP-datacom</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PowerShell/" rel="tag">PowerShell</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HCIP-datacom/" style="font-size: 14px;">HCIP-datacom</a> <a href="/tags/Hexo/" style="font-size: 13.5px;">Hexo</a> <a href="/tags/PowerShell/" style="font-size: 13px;">PowerShell</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Git/">Git</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/12/17/Git/%E5%88%A0%E9%99%A4git%E6%89%80%E6%9C%89%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95/" class="title">删除git所有提交记录</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-12-16T20:10:12.000Z" itemprop="datePublished">2022-12-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/HCIP-datacom/">HCIP-datacom</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/05/HCIP_datacom/4.OSPF%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" class="title">3、OSPF基础介绍</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-04T16:45:21.000Z" itemprop="datePublished">2022-11-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/HCIP-datacom/">HCIP-datacom</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/04/HCIP_datacom/3.HCIP-datacom%20IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/" class="title">2、IP路由基础</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-03T19:45:42.000Z" itemprop="datePublished">2022-11-04</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/HCIP-datacom/">HCIP-datacom</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/02/HCIP_datacom/2.HCIP-datacom%20%E8%AE%A4%E8%AF%86%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87/" class="title">1、认识网络设备</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-01T18:23:18.000Z" itemprop="datePublished">2022-11-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/HCIP-datacom/">HCIP-datacom</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/01/HCIP_datacom/1.HCIP-datacom%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E8%A7%84%E5%88%92/" class="title">HCIP-datacom 学习路线规划</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-01T02:24:00.000Z" itemprop="datePublished">2022-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-Hexo/Hexo Pure主题修改日记" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hexo Pure主题修改日记
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/10/31/Hexo/Hexo%20Pure%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9%E6%97%A5%E8%AE%B0/" class="article-date">
+	  <time datetime="2022-10-30T18:10:22.000Z" itemprop="datePublished">2022-10-31</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/Hexo/" rel="tag">Hexo</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/10/31/Hexo/Hexo%20Pure%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9%E6%97%A5%E8%AE%B0/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.2k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 6(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h3 id="1-添加背景动画"><a href="#1-添加背景动画" class="headerlink" title="1.添加背景动画"></a>1.添加背景动画</h3><p>背景动画基于canvas，在<code>\themes\pure\layout\layout.ejs</code>中添加</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 背景动画 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">color</span>=<span class="string">&quot;0,0,0&quot;</span> <span class="attr">opacity</span>=<span class="string">&#x27;0.8&#x27;</span> <span class="attr">zIndex</span>=<span class="string">&quot;-2&quot;</span> <span class="attr">count</span>=<span class="string">&quot;88&quot;</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">  color: 线条颜色，默认：‘0，0，0’；三个数字分别为(R,G,B),注意使用，分割</span></span><br><span class="line"><span class="comment">  opacity: 线条透明度0~1,默认0.5</span></span><br><span class="line"><span class="comment">  count: 线条总数量，默认150</span></span><br><span class="line"><span class="comment">  zIndex: 背景的z-Index属性，css用于控制所在层的位置，默认-1 </span></span><br><span class="line"><span class="comment">  --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-更改代码块样式"><a href="#2-更改代码块样式" class="headerlink" title="2.更改代码块样式"></a>2.更改代码块样式</h3><p>修改<code>.\themes\pure\source\css\style.css</code></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pre,</span><br><span class="line"><span class="selector-class">.highlight</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#cfcbcb</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">15px</span> <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">overflow</span>: auto;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">18px</span>;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;Consolas&quot;</span>;</span><br><span class="line">  <span class="attribute">font-weight</span>: bold;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#4d4d4c</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1.5</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-添加代码块一键复制按钮-原文"><a href="#3-添加代码块一键复制按钮-原文" class="headerlink" title="3.添加代码块一键复制按钮[原文]"></a>3.添加代码块一键复制按钮[<a target="_blank" rel="noopener" href="https://blog.iwwee.com/posts/hexo-optimize.html#%E4%B8%BA%E4%BB%A3%E7%A0%81%E5%9D%97%E5%A2%9E%E5%8A%A0%E5%A4%8D%E5%88%B6%E6%8C%89%E9%92%AE">原文</a>]</h3><p>（1）、增加全局函数addLoadEvent  </p>
+<p>在<code>/themes/pure/source/js</code>目录下打开<code>application.js</code>，在文件最后追加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">addLoadEvent</span>(<span class="params">func</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> oldonload = <span class="variable language_">window</span>.<span class="property">onload</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="variable language_">window</span>.<span class="property">onload</span> != <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">        <span class="variable language_">window</span>.<span class="property">onload</span> = func;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">window</span>.<span class="property">onload</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="title function_">oldonload</span>();</span><br><span class="line">            <span class="title function_">func</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（2）、新增按钮</p>
+<p>pure默认情况下是没有代码复制功能的，此时需要对hexo增加复制代码块功能。<br>首先在<code>/themes/pure/layout/_partial</code>目录下新增<code>article-copy-code.ejs</code>，增加以下内容：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">&lt;% <span class="keyword">if</span>(theme.<span class="property">codeblock</span>.<span class="property">copy_button</span>.<span class="property">enable</span>)&#123; %&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">      <span class="selector-class">.copy-btn</span> &#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">display</span>: inline-block;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">padding</span>: <span class="number">6px</span> <span class="number">12px</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">font-size</span>: <span class="number">13px</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">font-weight</span>: <span class="number">700</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">line-height</span>: <span class="number">20px</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">color</span>: <span class="number">#333</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">white-space</span>: nowrap;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">vertical-align</span>: middle;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">cursor</span>: pointer;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">background-color</span>: <span class="number">#eee</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">background-image</span>: <span class="built_in">linear-gradient</span>(<span class="number">#fcfcfc</span>, <span class="number">#eee</span>);</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#d5d5d5</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">border-radius</span>: <span class="number">3px</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        user-select: none;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">outline</span>: <span class="number">0</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">      &#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">      <span class="selector-class">.highlight-wrap</span> <span class="selector-class">.copy-btn</span> &#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">transition</span>: opacity .<span class="number">3s</span> ease-in-out;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">opacity</span>: <span class="number">0</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">padding</span>: <span class="number">2px</span> <span class="number">6px</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">position</span>: absolute;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">right</span>: <span class="number">4px</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">top</span>: <span class="number">8px</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">z-index</span>: <span class="number">2</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">      &#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">      <span class="selector-class">.highlight-wrap</span><span class="selector-pseudo">:hover</span> <span class="selector-class">.copy-btn</span>,</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">          <span class="selector-class">.highlight-wrap</span> <span class="selector-class">.copy-btn</span><span class="selector-pseudo">:focus</span> &#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">opacity</span>: <span class="number">1</span></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">      &#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">      <span class="selector-class">.highlight-wrap</span> &#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">position</span>: relative;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">      &#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br><span class="line">    </span><br><span class="line">    &lt;script&gt;</span><br><span class="line">      addLoadEvent(()=&gt;&#123;</span><br><span class="line">        $(&#x27;.highlight&#x27;).each(function (i, e) &#123;</span><br><span class="line">          var $wrap = $(&#x27;&lt;div&gt;&#x27;).addClass(&#x27;highlight-wrap&#x27;)</span><br><span class="line">          $(e).after($wrap)</span><br><span class="line">          $wrap.append($(&#x27;&lt;button&gt;&#x27;).addClass(&#x27;copy-btn&#x27;).append(&#x27;&lt;%= __(&quot;codeblock.copy_button&quot;) %&gt;&#x27;).on(&#x27;click&#x27;, function (e) &#123;</span><br><span class="line">            var code = $(this).parent().find(&quot;.code&quot;)[0].innerText</span><br><span class="line">            &lt;% if(theme.codeblock.copyright.enable)&#123; %&gt;</span><br><span class="line">                code += &quot;&lt;%= theme.codeblock.copyright.content %&gt;&quot;</span><br><span class="line">            &lt;% &#125; %&gt;</span><br><span class="line">            var ta = document.createElement(&#x27;textarea&#x27;)</span><br><span class="line">            document.body.appendChild(ta)</span><br><span class="line">            ta.style.position = &#x27;absolute&#x27;</span><br><span class="line">            ta.style.top = &#x27;0px&#x27;</span><br><span class="line">            ta.style.left = &#x27;0px&#x27;</span><br><span class="line">            ta.value = code</span><br><span class="line">            ta.select()</span><br><span class="line">            ta.focus()</span><br><span class="line">            var result = document.execCommand(&#x27;copy&#x27;)</span><br><span class="line">            document.body.removeChild(ta)</span><br><span class="line">            &lt;% if(theme.codeblock.copy_button.result)&#123; %&gt;</span><br><span class="line">              if(result)$(this).text(&#x27;&lt;%= __(&quot;codeblock.copy_success&quot;) %&gt;&#x27;)</span><br><span class="line">              else $(this).text(&#x27;&lt;%= __(&quot;codeblock.copy_failure&quot;) %&gt;&#x27;)</span><br><span class="line">            &lt;% &#125; %&gt;</span><br><span class="line">            $(this).blur()</span><br><span class="line">          &#125;)).on(&#x27;mouseleave&#x27;, function (e) &#123;</span><br><span class="line">            var $b = $(this).find(&#x27;.copy-btn&#x27;)</span><br><span class="line">            setTimeout(function () &#123;</span><br><span class="line">              $b.text(&#x27;&lt;%= __(&quot;codeblock.copy_button&quot;) %&gt;&#x27;)</span><br><span class="line">            &#125;, 300)</span><br><span class="line">          &#125;).append(e)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">  &lt;% &#125; %&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>（3）、插入到页面：<br>编辑<code>/themes/pure/layout/layout.ejs</code>，在<code>&lt;/body&gt;</code>前面一行增加<code>&lt;%- partial(&#39;_partial/article-copy-code&#39;)%&gt;</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  &lt;%- body %&gt;</span><br><span class="line">  &lt;%- partial(&#x27;_common/footer&#x27;, null, &#123;cache: !config.relative_link&#125;) %&gt;</span><br><span class="line">  &lt;%- partial(&#x27;_common/script&#x27;, &#123;post: page&#125;) %&gt;</span><br><span class="line">  &lt;%- partial(&#x27;_partial/article-copy-code&#x27;) %&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p>（4）、增加语言文件：<br>在<code>/themes/pure/languages</code>目录下选择对应的语言文件，在文件后面增加：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">codeblock:</span></span><br><span class="line">  <span class="attr">copy_button:</span> <span class="string">复制</span></span><br><span class="line">  <span class="attr">copy_success:</span> <span class="string">复制成功</span></span><br><span class="line">  <span class="attr">copy_failure:</span> <span class="string">复制失败</span></span><br></pre></td></tr></table></figure>
+
+<p>（5）、增加主题配置文件<br>打开<code>themes/pure/_config.yml</code>，在文件末尾添加</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">codeblock:</span> </span><br><span class="line">  <span class="attr">copy_button:</span> </span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">result:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">copyright:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">content:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-代码块滚动条-原文"><a href="#4-代码块滚动条-原文" class="headerlink" title="4.代码块滚动条[原文]"></a>4.代码块滚动条[<a target="_blank" rel="noopener" href="https://blog.iwwee.com/posts/hexo-optimize.html#%E4%B8%BA%E4%BB%A3%E7%A0%81%E5%9D%97%E5%A2%9E%E5%8A%A0%E5%A4%8D%E5%88%B6%E6%8C%89%E9%92%AE">原文</a>]</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.highlight</span>::-webkit-scrollbar &#123;</span><br><span class="line">  <span class="comment">/*滚动条整体样式*/</span></span><br><span class="line">  <span class="comment">/*高宽分别对应横竖滚动条的尺寸*/</span></span><br><span class="line">  <span class="comment">/*width: 10px;*/</span></span><br><span class="line">  <span class="attribute">height</span>: <span class="number">8px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">/* 代码块滚动条 */</span></span><br><span class="line"><span class="selector-class">.highlight</span>::-webkit-scrollbar-thumb &#123;</span><br><span class="line">  <span class="comment">/*滚动条里面小方块*/</span></span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">45px</span>;</span><br><span class="line">  <span class="comment">/*background-color: #D62929;*/</span></span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#6f6969</span>;</span><br><span class="line">  <span class="attribute">background-image</span>: <span class="built_in">-webkit-linear-gradient</span>(<span class="number">168deg</span>,</span><br><span class="line">      <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.2</span>) <span class="number">100%</span>, <span class="comment">/*12.5*/</span></span><br><span class="line">      transparent <span class="number">12.5%</span>,</span><br><span class="line">      transparent <span class="number">25%</span>,</span><br><span class="line">      <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.2</span>) <span class="number">25%</span>,</span><br><span class="line">      <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.2</span>) <span class="number">37.5%</span>,</span><br><span class="line">      transparent <span class="number">37.5%</span>,</span><br><span class="line">      transparent <span class="number">50%</span>,</span><br><span class="line">      <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.2</span>) <span class="number">50%</span>,</span><br><span class="line">      <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.2</span>) <span class="number">62.5%</span>,</span><br><span class="line">      transparent <span class="number">62.5%</span>,</span><br><span class="line">      transparent <span class="number">75%</span>,</span><br><span class="line">      <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.2</span>) <span class="number">75%</span>,</span><br><span class="line">      <span class="built_in">rgba</span>(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">0.2</span>) <span class="number">87.5%</span>,</span><br><span class="line">      transparent <span class="number">87.5%</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.highlight</span>::-webkit-scrollbar-track &#123;</span><br><span class="line">  <span class="comment">/*滚动条里面轨道*/</span></span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#0f111a</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-添加回到顶部-原文"><a href="#5-添加回到顶部-原文" class="headerlink" title="5.添加回到顶部 [ 原文 ]"></a>5.添加回到顶部 <a target="_blank" rel="noopener" href="https://hwame.top/20200520/hello-hexo-troubleshooting.html">[ 原文 ]</a></h3><p>文件位置：<code>./themes/pure/layout/_common/script.ejs</code>，在合适位置添加如下代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;go-top&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">#go-top &#123;</span><br><span class="line"> width:40px;height:36px;</span><br><span class="line"> background-color:#DDA0DD;</span><br><span class="line"> position:relative;</span><br><span class="line"> border-radius:2px;</span><br><span class="line"> position:fixed;right:10px;bottom:60px;</span><br><span class="line"> cursor:pointer;display:none;</span><br><span class="line">&#125;</span><br><span class="line">#go-top:after &#123;</span><br><span class="line"> content:&quot; &quot;;</span><br><span class="line"> position:absolute;left:14px;top:14px;</span><br><span class="line"> border-top:2px solid #fff;border-right:2px solid #fff;</span><br><span class="line"> width:12px;height:12px;</span><br><span class="line"> transform:rotate(-45deg);</span><br><span class="line">&#125;</span><br><span class="line">#go-top:hover &#123;</span><br><span class="line"> background-color:#8A2BE2;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">$(function () &#123;</span><br><span class="line">  var top=$(&quot;#go-top&quot;);</span><br><span class="line">  $(window).scroll(function () &#123;</span><br><span class="line">    ($(window).scrollTop() &gt; 300) ? top.show(300) : top.hide(200);</span><br><span class="line">    $(&quot;#go-top&quot;).click(function () &#123;</span><br><span class="line">      $(&#x27;body,html&#x27;).animate(&#123;scrollTop:0&#125;);</span><br><span class="line">      return false();</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-使文章图片居中-原文"><a href="#6-使文章图片居中-原文" class="headerlink" title="6.使文章图片居中[ 原文 ]"></a>6.使文章图片居中<a target="_blank" rel="noopener" href="https://hwame.top/20200520/hello-hexo-troubleshooting.html">[ 原文 ]</a></h3><p>第一步：在<code>./themes/pure/source/css/style.css</code>下</p>
+<p>第二步：125行<code>img</code>修改：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">img</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">  <span class="attribute">margin</span>: auto;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">3px</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <div class="article-footer">
+      <!-- <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2022/10/31/Hexo/Hexo%20Pure%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9%E6%97%A5%E8%AE%B0/" title="Hexo Pure主题修改日记" target="_blank" rel="external">http://example.com/2022/10/31/Hexo/Hexo Pure主题修改日记/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote> -->
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/1024-byteeeee" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/1024-byteeeee" target="_blank"><span class="text-dark">Solomon</span><small class="ml-1x">生命的遗产是对知识的更新</small></a></h3>
+        <div>是鸟吗？是飞机吗？是 A Minecraft Server!</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/10/31/PowerShell/%E5%9C%A8PowerShell%E4%B8%AD%E4%BD%BF%E7%94%A8title%E5%91%BD%E4%BB%A4/" title="在PowerShell中使用title命令"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="qq,wechat,qzone" data-mobile-sites="wechat,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/1024-byteeeee" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        <div> ©2022 Solomon </div>
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+
+<div id="go-top"></div>
+<style type="text/css">
+#go-top {
+ width:40px;height:36px;
+ background-color:#70a3e6;
+ position:relative;
+ border-radius:2px;
+ position:fixed;right:10px;bottom:60px;
+ cursor:pointer;display:none;
+}
+#go-top:after {
+ content:" ";
+ position:absolute;left:14px;top:14px;
+ border-top:2px solid #fff;border-right:2px solid #fff;
+ width:12px;height:12px;
+ transform:rotate(-45deg);
+}
+#go-top:hover {
+ background-color:#1b55a0;
+}
+</style>
+<script>
+$(function () {
+  var top=$("#go-top");
+  $(window).scroll(function () {
+    ($(window).scrollTop() > 300) ? top.show(300) : top.hide(200);
+    $("#go-top").click(function () {
+      $('body,html').animate({scrollTop:0});
+      return false();
+    })
+  });
+});
+</script>
+
+  
+    <style>
+      .copy-btn {
+        display: inline-block;
+        padding: 6px 12px;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 20px;
+        color: #333;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        background-color: #eee;
+        background-image: linear-gradient(#fcfcfc, #eee);
+        border: 1px solid #d5d5d5;
+        border-radius: 3px;
+        user-select: none;
+        outline: 0;
+      }
+  
+      .highlight-wrap .copy-btn {
+        transition: opacity .3s ease-in-out;
+        opacity: 0;
+        padding: 2px 6px;
+        position: absolute;
+        right: 4px;
+        top: 8px;
+        z-index: 2;
+      }
+  
+      .highlight-wrap:hover .copy-btn,
+          .highlight-wrap .copy-btn:focus {
+        opacity: 1
+      }
+  
+      .highlight-wrap {
+        position: relative;
+      }
+    </style>
+    
+    <script>
+      addLoadEvent(()=>{
+        $('.highlight').each(function (i, e) {
+          var $wrap = $('<div>').addClass('highlight-wrap')
+          $(e).after($wrap)
+          $wrap.append($('<button>').addClass('copy-btn').append('copy').on('click', function (e) {
+            var code = $(this).parent().find(".code")[0].innerText
+            
+                code += "false"
+            
+            var ta = document.createElement('textarea')
+            document.body.appendChild(ta)
+            ta.style.position = 'absolute'
+            ta.style.top = '0px'
+            ta.style.left = '0px'
+            ta.value = code
+            ta.select()
+            ta.focus()
+            var result = document.execCommand('copy')
+            document.body.removeChild(ta)
+            
+              if(result)$(this).text('copy success')
+              else $(this).text('copy failed')
+            
+            $(this).blur()
+          })).on('mouseleave', function (e) {
+            var $b = $(this).find('.copy-btn')
+            setTimeout(function () {
+              $b.text('copy')
+            }, 300)
+          }).append(e)
+        })
+      })
+    </script>
+  
+
+  <!-- 背景动画 -->
+  <script type="text/javascript" color="0,0,0" opacity='0.8' zIndex="-2" count="88" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  <!-- 
+  color: 线条颜色，默认：‘0，0，0’；三个数字分别为(R,G,B),注意使用，分割
+  opacity: 线条透明度0~1,默认0.5
+  count: 线条总数量，默认150
+  zIndex: 背景的z-Index属性，css用于控制所在层的位置，默认-1 
+  -->
+</body>
+</html>
