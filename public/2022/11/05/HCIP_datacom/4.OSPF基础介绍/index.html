@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>3、OSPF基础介绍 | Solomon</title>
+  <meta name="description" content="前言·  路由器根据路由表转发数据包，路由表项可通过手动配置和动态路由协议生成。 ·  静态路由比动态路由使用更少的贷款，并且不占用CPU资源来计算和分析路由更新。当网络结构比较简单时，只需配置静态路由就可以使网络正常工作。但是当网络发生故障或者拓扑发生变化后，静态路由不会自动更新，必须手动重新配置。 ·  相比较于静态路由，动态路由协议具有更强的可扩展性，具备更强的应变能力。 ·  OSPF（O">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3、OSPF基础介绍">
+<meta property="og:url" content="http://example.com/2022/11/05/HCIP_datacom/4.OSPF%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="Solomon">
+<meta property="og:description" content="前言·  路由器根据路由表转发数据包，路由表项可通过手动配置和动态路由协议生成。 ·  静态路由比动态路由使用更少的贷款，并且不占用CPU资源来计算和分析路由更新。当网络结构比较简单时，只需配置静态路由就可以使网络正常工作。但是当网络发生故障或者拓扑发生变化后，静态路由不会自动更新，必须手动重新配置。 ·  相比较于静态路由，动态路由协议具有更强的可扩展性，具备更强的应变能力。 ·  OSPF（O">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/HCIP-datacom-3%E3%80%81OSPF%E5%9F%BA%E7%A1%80/%E6%80%BB%E7%BB%93.PNG">
+<meta property="article:published_time" content="2022-11-04T16:45:21.000Z">
+<meta property="article:modified_time" content="2022-11-15T18:21:15.444Z">
+<meta property="article:author" content="Solomon">
+<meta property="article:tag" content="HCIP-datacom">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/HCIP-datacom-3%E3%80%81OSPF%E5%9F%BA%E7%A1%80/%E6%80%BB%E7%BB%93.PNG">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2022/11/05/HCIP_datacom/4.OSPF%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Solomon" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/1024-byteeeee" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Solomon</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">生命的遗产是对知识的更新</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> A Minecraft Server, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/1024-byteeeee" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                这里是Solomon的博客<br>欢迎加入A Minecraft Server技术生存服务器<br>官网：mcams.club
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HCIP-datacom/">HCIP-datacom</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C%E5%B7%A5%E7%A8%8B%EF%BC%88%E6%9D%82%E9%A1%B9%EF%BC%89/">网络工程（杂项）</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HCIP-datacom/" rel="tag">HCIP-datacom</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PowerShell/" rel="tag">PowerShell</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HCIP-datacom/" style="font-size: 14px;">HCIP-datacom</a> <a href="/tags/Hexo/" style="font-size: 13.5px;">Hexo</a> <a href="/tags/PowerShell/" style="font-size: 13px;">PowerShell</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Git/">Git</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/12/17/Git/%E5%88%A0%E9%99%A4git%E6%89%80%E6%9C%89%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95/" class="title">删除git所有提交记录</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-12-16T20:10:12.000Z" itemprop="datePublished">2022-12-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/HCIP-datacom/">HCIP-datacom</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/05/HCIP_datacom/4.OSPF%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" class="title">3、OSPF基础介绍</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-04T16:45:21.000Z" itemprop="datePublished">2022-11-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/HCIP-datacom/">HCIP-datacom</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/04/HCIP_datacom/3.HCIP-datacom%20IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/" class="title">2、IP路由基础</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-03T19:45:42.000Z" itemprop="datePublished">2022-11-04</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/HCIP-datacom/">HCIP-datacom</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/02/HCIP_datacom/2.HCIP-datacom%20%E8%AE%A4%E8%AF%86%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87/" class="title">1、认识网络设备</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-01T18:23:18.000Z" itemprop="datePublished">2022-11-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/HCIP-datacom/">HCIP-datacom</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/01/HCIP_datacom/1.HCIP-datacom%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E8%A7%84%E5%88%92/" class="title">HCIP-datacom 学习路线规划</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-01T02:24:00.000Z" itemprop="datePublished">2022-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-HCIP_datacom/4.OSPF基础介绍" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      3、OSPF基础介绍
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/11/05/HCIP_datacom/4.OSPF%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" class="article-date">
+	  <time datetime="2022-11-04T16:45:21.000Z" itemprop="datePublished">2022-11-05</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/HCIP-datacom/">HCIP-datacom</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/HCIP-datacom/" rel="tag">HCIP-datacom</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/11/05/HCIP_datacom/4.OSPF%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 995(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 3(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>·</strong>  路由器根据路由表转发数据包，路由表项可通过手动配置和动态路由协议生成。</p>
+<p><strong>·</strong>  静态路由比动态路由使用更少的贷款，并且不占用CPU资源来计算和分析路由更新。当网络结构比较简单时，只需配置静态路由就可以使网络正常工作。但是当网络发生故障或者拓扑发生变化后，静态路由不会自动更新，必须手动重新配置。</p>
+<p><strong>·</strong>  相比较于静态路由，动态路由协议具有更强的可扩展性，具备更强的应变能力。</p>
+<p><strong>·</strong>  OSPF（Open Shortest Path First，开放式最短路径优先）具有扩展性强，收敛速度快等特点，作为优秀的内部网关协议被广泛使用。</p>
+<br>
+
+<h1 id="Ⅰ-动态路由协议简介"><a href="#Ⅰ-动态路由协议简介" class="headerlink" title="Ⅰ - 动态路由协议简介"></a>Ⅰ - 动态路由协议简介</h1><h2 id="1-动态路由协议的分类"><a href="#1-动态路由协议的分类" class="headerlink" title="1.动态路由协议的分类"></a>1.动态路由协议的分类</h2><p>按工作区域分类：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">IGP（Interior Gateway Protocols，内部网关协议）：</span><br><span class="line">· RIP</span><br><span class="line">· OSPF</span><br><span class="line">· IS-IS</span><br><span class="line"></span><br><span class="line">EGP（Exterior Gateway Protocols，外部网关协议）&#123;</span><br><span class="line">· BGP</span><br></pre></td></tr></table></figure>
+
+<p>按工作机制及算法分类：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">（Distance Vector Routing Protocols，距离矢量路由协议）</span><br><span class="line">· RIP</span><br><span class="line"></span><br><span class="line">（Link-State Routing Protocols，链路状态路由协议）</span><br><span class="line">· OSPF</span><br><span class="line">· IS-IS</span><br></pre></td></tr></table></figure>
+
+<p><strong>·</strong>  BGP使用一种基于距离矢量算法修改后的算法，该算法被称为路径矢量算法。因此在某些场合下，BGP也被成为路径矢量路由协议。</p>
+<p><strong>·</strong>  IGP（内部网关协议）在同一个自治系统内交换路由信息，IGP的主要目的是发现和计算自治域内的路由信息。</p>
+<p><strong>·</strong>  EGP（外部网关协议）主要用于AS（自治系统）之间的互联。</p>
+ <br>
+
+<h2 id="2-距离矢量路由协议"><a href="#2-距离矢量路由协议" class="headerlink" title="2.距离矢量路由协议"></a>2.距离矢量路由协议</h2><p><strong>·</strong>  运行距离矢量路由协议的路由器周期性地泛洪自己的路由表。通过路由地交互，每台路由器都从相邻地路由器学习到路由，并且加载进自己的路由表中，然后再通告给其他相邻路由器。</p>
+<p><strong>·</strong>  对于网络中地所有路由器而言，路由器并不清楚网络的拓扑，只是简单地知道要去往某个目的地网段方向在哪里，开销有多大。</p>
+<h2 id="3-链路状态路由协议-LSA泛洪"><a href="#3-链路状态路由协议-LSA泛洪" class="headerlink" title="3.链路状态路由协议 - LSA泛洪"></a>3.链路状态路由协议 - LSA泛洪</h2><p><strong>·</strong>  链路状态路由协议通告的是链路状态而不是路由信息。</p>
+<p><strong>·</strong>  运行链路状态协议的路由器之间首先会建立邻居关系，然后彼此之间开始交换LSA（Link State Advertisement，链路状态通告）。</p>
+<p><strong>·</strong>  链路状态通告，可以简单的理解为每台路由器都产生一个描述自己的直连接口状态（包括接口的开销、与邻居路由器之间的关系等）的通告。</p>
+<br>
+
+<h2 id="4-链路状态路由协议-LSDB维护"><a href="#4-链路状态路由协议-LSDB维护" class="headerlink" title="4.链路状态路由协议 - LSDB维护"></a>4.链路状态路由协议 - LSDB维护</h2><p>每台路由器都会产生LSA，路由器将接收到的LSA放入自己的LSDB（Link State DataBase，链路状态数据库）。路由器通过对LSDB中所储存的LSA进行解析，进而了解全网拓扑。</p>
+<br>
+
+<h2 id="5-链路状态路由协议-SPF计算"><a href="#5-链路状态路由协议-SPF计算" class="headerlink" title="5.链路状态路由协议 - SPF计算"></a>5.链路状态路由协议 - SPF计算</h2><p>每台路由器基于LSDB，使用SPF（Shortest Path First，最短路径优先）算法进行计算。每台路由器都计算出一棵以自己为根的、无环的、拥有最短路径的“树”。有了这颗“树”，路由器就已经知道了到达所有网段的优选路径。SPF是OSPF路由协议的一个核心算法，用来再一个复杂的网络中做出路由优选的决策。</p>
+<br>
+
+<h2 id="6-链路状态路由协议-路由表生成"><a href="#6-链路状态路由协议-路由表生成" class="headerlink" title="6.链路状态路由协议 - 路由表生成"></a>6.链路状态路由协议 - 路由表生成</h2><p>路由器将计算出来的优选路径，加载进自己的路由表。</p>
+<br>
+
+<h2 id="7-链路状态路由协议总结"><a href="#7-链路状态路由协议总结" class="headerlink" title="7.链路状态路由协议总结"></a>7.链路状态路由协议总结</h2><p><img src="/../images/HCIP-datacom-3%E3%80%81OSPF%E5%9F%BA%E7%A1%80/%E6%80%BB%E7%BB%93.PNG" alt="总结"></p>
+<p>第一步：建立相邻路由器之间的邻居关系。</p>
+<p>第二步：邻居之间交互链路状态信息和同步LSDB</p>
+<p>第三步：是进行优选路径计算</p>
+<p>第四步：根据最短路径树生成路由表项加载到路由表</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <!-- <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2022/11/05/HCIP_datacom/4.OSPF%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" title="3、OSPF基础介绍" target="_blank" rel="external">http://example.com/2022/11/05/HCIP_datacom/4.OSPF基础介绍/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote> -->
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/1024-byteeeee" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/1024-byteeeee" target="_blank"><span class="text-dark">Solomon</span><small class="ml-1x">生命的遗产是对知识的更新</small></a></h3>
+        <div>是鸟吗？是飞机吗？是 A Minecraft Server!</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/12/17/Git/%E5%88%A0%E9%99%A4git%E6%89%80%E6%9C%89%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95/" title="删除git所有提交记录"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/11/04/HCIP_datacom/3.HCIP-datacom%20IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/" title="2、IP路由基础"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="qq,wechat,qzone" data-mobile-sites="wechat,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/1024-byteeeee" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        <div> ©2022 Solomon </div>
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+
+<div id="go-top"></div>
+<style type="text/css">
+#go-top {
+ width:40px;height:36px;
+ background-color:#70a3e6;
+ position:relative;
+ border-radius:2px;
+ position:fixed;right:10px;bottom:60px;
+ cursor:pointer;display:none;
+}
+#go-top:after {
+ content:" ";
+ position:absolute;left:14px;top:14px;
+ border-top:2px solid #fff;border-right:2px solid #fff;
+ width:12px;height:12px;
+ transform:rotate(-45deg);
+}
+#go-top:hover {
+ background-color:#1b55a0;
+}
+</style>
+<script>
+$(function () {
+  var top=$("#go-top");
+  $(window).scroll(function () {
+    ($(window).scrollTop() > 300) ? top.show(300) : top.hide(200);
+    $("#go-top").click(function () {
+      $('body,html').animate({scrollTop:0});
+      return false();
+    })
+  });
+});
+</script>
+
+  
+    <style>
+      .copy-btn {
+        display: inline-block;
+        padding: 6px 12px;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 20px;
+        color: #333;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        background-color: #eee;
+        background-image: linear-gradient(#fcfcfc, #eee);
+        border: 1px solid #d5d5d5;
+        border-radius: 3px;
+        user-select: none;
+        outline: 0;
+      }
+  
+      .highlight-wrap .copy-btn {
+        transition: opacity .3s ease-in-out;
+        opacity: 0;
+        padding: 2px 6px;
+        position: absolute;
+        right: 4px;
+        top: 8px;
+        z-index: 2;
+      }
+  
+      .highlight-wrap:hover .copy-btn,
+          .highlight-wrap .copy-btn:focus {
+        opacity: 1
+      }
+  
+      .highlight-wrap {
+        position: relative;
+      }
+    </style>
+    
+    <script>
+      addLoadEvent(()=>{
+        $('.highlight').each(function (i, e) {
+          var $wrap = $('<div>').addClass('highlight-wrap')
+          $(e).after($wrap)
+          $wrap.append($('<button>').addClass('copy-btn').append('copy').on('click', function (e) {
+            var code = $(this).parent().find(".code")[0].innerText
+            
+                code += "false"
+            
+            var ta = document.createElement('textarea')
+            document.body.appendChild(ta)
+            ta.style.position = 'absolute'
+            ta.style.top = '0px'
+            ta.style.left = '0px'
+            ta.value = code
+            ta.select()
+            ta.focus()
+            var result = document.execCommand('copy')
+            document.body.removeChild(ta)
+            
+              if(result)$(this).text('copy success')
+              else $(this).text('copy failed')
+            
+            $(this).blur()
+          })).on('mouseleave', function (e) {
+            var $b = $(this).find('.copy-btn')
+            setTimeout(function () {
+              $b.text('copy')
+            }, 300)
+          }).append(e)
+        })
+      })
+    </script>
+  
+
+  <!-- 背景动画 -->
+  <script type="text/javascript" color="0,0,0" opacity='0.8' zIndex="-2" count="88" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  <!-- 
+  color: 线条颜色，默认：‘0，0，0’；三个数字分别为(R,G,B),注意使用，分割
+  opacity: 线条透明度0~1,默认0.5
+  count: 线条总数量，默认150
+  zIndex: 背景的z-Index属性，css用于控制所在层的位置，默认-1 
+  -->
+</body>
+</html>

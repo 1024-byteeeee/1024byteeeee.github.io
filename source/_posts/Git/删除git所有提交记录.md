@@ -6,7 +6,7 @@ categories: Git
 typora-root-url: ..
 ---
 
-## 让我们删除历史厚重的主分支提交记录
+## 删除Git所有提交记录
 
 1、切换一个新的分支
 
@@ -42,5 +42,5 @@ git branch -m master
 8、强制推送到仓库中
 
 ```bash
-git push -f orgin master
+git push -f origin master
 ```

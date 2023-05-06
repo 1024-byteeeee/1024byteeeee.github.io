@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>2、IP路由基础 | Solomon</title>
+  <meta name="description" content="前言· 当路由器收到一个IP数据包，路由器会根据数据包的目的IP地址查找FIB（Forwarding Information Base，转发信息库）表，找到“最匹配”的路由条目后，将数据包根据路由条目所指示的出接口或下一跳转发出去。   · 路由器获取路由的方式有三种，分别是动态路由、静态路由、直连路由。一个网络中可能会同时存在这三种方式，那么采用不同方式获取路由的路由器之间如何实现路由可达？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2、IP路由基础">
+<meta property="og:url" content="http://example.com/2022/11/04/HCIP_datacom/3.HCIP-datacom%20IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Solomon">
+<meta property="og:description" content="前言· 当路由器收到一个IP数据包，路由器会根据数据包的目的IP地址查找FIB（Forwarding Information Base，转发信息库）表，找到“最匹配”的路由条目后，将数据包根据路由条目所指示的出接口或下一跳转发出去。   · 路由器获取路由的方式有三种，分别是动态路由、静态路由、直连路由。一个网络中可能会同时存在这三种方式，那么采用不同方式获取路由的路由器之间如何实现路由可达？">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E8%A1%A8.PNG">
+<meta property="og:image" content="http://example.com/images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%BD%AC%E5%8F%91%E8%A1%A8.PNG">
+<meta property="og:image" content="http://example.com/images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E8%A1%A8%E4%B8%AD%E7%9A%84%E5%85%B3%E9%94%AE%E5%AD%97%E6%AE%B5.PNG">
+<meta property="og:image" content="http://example.com/images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/FIB%E8%A1%A8%E4%B8%AD%E7%9A%84%E5%85%B3%E9%94%AE%E5%AD%97%E6%AE%B5.PNG">
+<meta property="og:image" content="http://example.com/images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E7%9A%84%E6%9D%A5%E6%BA%90.PNG">
+<meta property="og:image" content="http://example.com/images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE.PNG">
+<meta property="og:image" content="http://example.com/images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E8%BF%AD%E4%BB%A3.PNG">
+<meta property="og:image" content="http://example.com/images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E5%9B%9E%E7%81%8C.PNG">
+<meta property="og:image" content="http://example.com/images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E5%BA%A6%E9%87%8F%E5%80%BC.PNG">
+<meta property="article:published_time" content="2022-11-03T19:45:42.000Z">
+<meta property="article:modified_time" content="2022-11-09T21:31:18.697Z">
+<meta property="article:author" content="Solomon">
+<meta property="article:tag" content="HCIP-datacom">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E8%A1%A8.PNG">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2022/11/04/HCIP_datacom/3.HCIP-datacom%20IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Solomon" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+    <link href="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.css" rel="stylesheet">
+  
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/1024-byteeeee" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">Solomon</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">生命的遗产是对知识的更新</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> A Minecraft Server, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav menu-highlight">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/1024-byteeeee" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                这里是Solomon的博客<br>欢迎加入A Minecraft Server技术生存服务器<br>官网：mcams.club
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/HCIP-datacom/">HCIP-datacom</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Hexo/">Hexo</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BD%91%E7%BB%9C%E5%B7%A5%E7%A8%8B%EF%BC%88%E6%9D%82%E9%A1%B9%EF%BC%89/">网络工程（杂项）</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Git/" rel="tag">Git</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HCIP-datacom/" rel="tag">HCIP-datacom</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PowerShell/" rel="tag">PowerShell</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Git/" style="font-size: 13px;">Git</a> <a href="/tags/HCIP-datacom/" style="font-size: 14px;">HCIP-datacom</a> <a href="/tags/Hexo/" style="font-size: 13.5px;">Hexo</a> <a href="/tags/PowerShell/" style="font-size: 13px;">PowerShell</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/12/">十二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">十一月 2022</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">3</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/Git/">Git</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/12/17/Git/%E5%88%A0%E9%99%A4git%E6%89%80%E6%9C%89%E6%8F%90%E4%BA%A4%E8%AE%B0%E5%BD%95/" class="title">删除git所有提交记录</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-12-16T20:10:12.000Z" itemprop="datePublished">2022-12-17</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/HCIP-datacom/">HCIP-datacom</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/05/HCIP_datacom/4.OSPF%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" class="title">3、OSPF基础介绍</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-04T16:45:21.000Z" itemprop="datePublished">2022-11-05</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/HCIP-datacom/">HCIP-datacom</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/04/HCIP_datacom/3.HCIP-datacom%20IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/" class="title">2、IP路由基础</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-03T19:45:42.000Z" itemprop="datePublished">2022-11-04</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/HCIP-datacom/">HCIP-datacom</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/02/HCIP_datacom/2.HCIP-datacom%20%E8%AE%A4%E8%AF%86%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87/" class="title">1、认识网络设备</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-01T18:23:18.000Z" itemprop="datePublished">2022-11-02</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/HCIP-datacom/">HCIP-datacom</a>
+              </p>
+              <p class="item-title">
+                <a href="/2022/11/01/HCIP_datacom/1.HCIP-datacom%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E8%A7%84%E5%88%92/" class="title">HCIP-datacom 学习路线规划</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-11-01T02:24:00.000Z" itemprop="datePublished">2022-11-01</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-HCIP_datacom/3.HCIP-datacom IP路由基础" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      2、IP路由基础
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2022/11/04/HCIP_datacom/3.HCIP-datacom%20IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/" class="article-date">
+	  <time datetime="2022-11-03T19:45:42.000Z" itemprop="datePublished">2022-11-04</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/HCIP-datacom/">HCIP-datacom</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/HCIP-datacom/" rel="tag">HCIP-datacom</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/11/04/HCIP_datacom/3.HCIP-datacom%20IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/#comments" class="article-comment-link">评论</a></span>
+        
+	
+		<span class="post-wordcount hidden-xs" itemprop="wordCount">字数统计: 1.8k(字)</span>
+	
+	
+		<span class="post-readcount hidden-xs" itemprop="timeRequired">阅读时长: 6(分)</span>
+	
+
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>·</strong> 当路由器收到一个IP数据包，路由器会根据数据包的目的IP地址查找FIB（Forwarding Information Base，转发信息库）表，找到“最匹配”的路由条目后，将数据包根据路由条目所指示的出接口或下一跳转发出去。</p>
+<br>
+
+<p><strong>·</strong> 路由器获取路由的方式有三种，分别是动态路由、静态路由、直连路由。一个网络中可能会同时存在这三种方式，那么采用不同方式获取路由的路由器之间如何实现路由可达？</p>
+<br>
+
+<h1 id="Ⅰ-IP路由基础"><a href="#Ⅰ-IP路由基础" class="headerlink" title="Ⅰ - IP路由基础"></a>Ⅰ - IP路由基础</h1><h2 id="1-IP路由概述"><a href="#1-IP路由概述" class="headerlink" title="1.IP路由概述"></a>1.IP路由概述</h2><p>当路由器收到一个IP报文时，路由器根据该IP报文的目的地址匹配路由条目（或路由表项）。</p>
+<p><strong>·</strong>  若有匹配的路由条目，则依据该条目中的出接口或下一跳等信息进行报文转发。</p>
+<p><strong>·</strong>  若无匹配的路由条目，则路由器没有相关路由信息用于指导报文转发，此时会丢弃该报文。</p>
+<br>
+
+<h2 id="2-RIP与FIB"><a href="#2-RIP与FIB" class="headerlink" title="2.RIP与FIB"></a>2.RIP与FIB</h2><p>具有<strong>路由</strong>功能的网络设备都拥有两中国重要的数据表：</p>
+<p><strong>·</strong>  路由表——RIB（Routing Information Base，路由信息库）</p>
+<p><strong>·</strong>  转发表——FIB（Forwarding Information Base，转发信息库）</p>
+<p><strong>·</strong>  路由器维护一张本地核心路由表，此外还维护着各种路由协议的路由表</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">display ip routing-table   <span class="comment">//路由表</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E8%A1%A8.PNG" alt="路由表"></p>
+<p>可以将路由表视为路由器的控制平面，路由表实际上并不直接指导数据转发。路由器在执行路由表查询时，并不是在路由表中进行报文目的地址的查询，真正指导数据转发的时FIB表，路由器将路由表中的最优路由下载到FIB表，此后如果路由表中的相关表项发生变化，FIB表也将立即同步。 在大多数场合，阐述路由器数据转发过程时，会用<strong>“路由表”</strong>这个说法，实际上，路由器查询的时FIB表，路由表位于控制层面仅提供路由信息。</p>
+<br>
+
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">display fib [ slot-id ]   <span class="comment">//转发表（FIB表）[ slot-id ]：显示指定槽位号的FIB表信息，取值范围根据实际配置选取</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%BD%AC%E5%8F%91%E8%A1%A8.PNG" alt="转发表"></p>
+<p> FIB表位于路由器的数据平面，亦被称为转发表项，每条转发表项都指定要到达某个目的地所需通过的出接口以及下一跳IP地址等信息。</p>
+<br>
+
+<h2 id="3-路由表中的关键字段"><a href="#3-路由表中的关键字段" class="headerlink" title="3.路由表中的关键字段"></a>3.路由表中的关键字段</h2><p><img src="/../images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E8%A1%A8%E4%B8%AD%E7%9A%84%E5%85%B3%E9%94%AE%E5%AD%97%E6%AE%B5.PNG" alt="路由表中的关键字段"></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Destination   <span class="comment">//表示此路由的目的地址，用来标识IP包的目的地址或目的网络</span></span><br><span class="line">Mask   <span class="comment">//表示此目的地址的子网掩码长度。与目的地址一起来标识目的主机或路由器所在的网段的地址。</span></span><br><span class="line">Proto   <span class="comment">//表示学习此路由的路由协议（Protocol）</span></span><br><span class="line">Pre   <span class="comment">//表示此路由的路由协议优先级（Prefrence）</span></span><br><span class="line">Cost   <span class="comment">//路由开销</span></span><br><span class="line">NextHop   <span class="comment">//表示转发到此目的网络的下一跳，指明数据转发的下一个设备。</span></span><br><span class="line">Interface   <span class="comment">//表示转发到此目的网络的出接口，指明数据将从本地路由器哪个接口转发出去。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意：</strong></p>
+<p><strong>·</strong>  路由器分别定义了外部优先级和内部优先级。外部优先级可手动配置，反之内部优先级不可手动修改。</p>
+<p><strong>·</strong>  选择路由时先比较外部优先级，当不同的路由协议配置了相同的外部优先级时，系统会通过内部优先级决定哪个路由协议发现的路由将成为最优路由。</p>
+<p><strong>·</strong>  <code>Preference</code>用于不同路由协议间路由优先级的比较，<code>Cost</code>用于同一种路由协议内部不同路由的优先级的比较。</p>
+<br>
+
+<h2 id="4-FIB表中的关键字段"><a href="#4-FIB表中的关键字段" class="headerlink" title="4.FIB表中的关键字段"></a>4.FIB表中的关键字段</h2><p><img src="/../images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/FIB%E8%A1%A8%E4%B8%AD%E7%9A%84%E5%85%B3%E9%94%AE%E5%AD%97%E6%AE%B5.PNG" alt="FIB表中的关键字段"></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Titak number of Routes   <span class="comment">//路由表总数</span></span><br><span class="line">Destination/Mask   <span class="comment">//目的地址/掩码长度</span></span><br><span class="line">Nexthop   <span class="comment">//下一跳</span></span><br><span class="line">Flag   <span class="comment">//当前标志，G、H、U、S、D、B的组合</span></span><br><span class="line">   G   <span class="comment">// [ Gateway ] 网关路由，表示下一跳是网关</span></span><br><span class="line">   H   <span class="comment">// [ Host ] 主机路由，表示该路由为主机路由</span></span><br><span class="line">   U   <span class="comment">// [ Up ] 可用路由，表示该路由状态时UP</span></span><br><span class="line">   S   <span class="comment">// [ Static ] 静态路由</span></span><br><span class="line">   D   <span class="comment">// [ Dynamic ] 动态路由</span></span><br><span class="line">   B   <span class="comment">// [ Black Hole ] 黑洞路由，表示下一跳是空接口</span></span><br><span class="line">TimeStamp   <span class="comment">//时间戳，表示该表项存在的时间，单位是秒</span></span><br><span class="line">Interface   <span class="comment">//到目的地址的出接口</span></span><br><span class="line">TunnelID   <span class="comment">//表示转发表项索引，该值不为0时，表示该项的报文通过隧道转发（如：MPLS隧道转发），该值为0时，表示报文不通过隧道转发。</span></span><br></pre></td></tr></table></figure>
+
+<br>
+
+<h2 id="5-IP路由查找的最长匹配原则"><a href="#5-IP路由查找的最长匹配原则" class="headerlink" title="5.IP路由查找的最长匹配原则"></a>5.IP路由查找的最长匹配原则</h2><p><strong>·</strong>  路由器查找FIB表时，将报文的目的IP地址和FIB表中各表项的掩码位进行<strong>“逻辑与”</strong>，得到的地址符合FIB表中的网络地址则匹配。</p>
+<p><strong>·</strong>  最终选择一个掩码最长的FIB表转发报文。</p>
+<br>
+
+<h2 id="6-路由的来源"><a href="#6-路由的来源" class="headerlink" title="6.路由的来源"></a>6.路由的来源</h2><p><img src="/../images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E7%9A%84%E6%9D%A5%E6%BA%90.PNG" alt="路由的来源"></p>
+<p><strong>·</strong>  直连路由：直连接口所在网段的路由，由设备自动生成。</p>
+<p><strong>·</strong>  静态路由：由网络管理员手工配置的路由条目。</p>
+<p><strong>·</strong>  路由器通过动态路由协议（OSPF、IS-IS、BGP等）学习到的路由。</p>
+<br>
+
+<h2 id="7-动态路由协议"><a href="#7-动态路由协议" class="headerlink" title="7.动态路由协议"></a>7.动态路由协议</h2><p>动态路由协议根据作用范围不同可分为：</p>
+<p><strong>·</strong>  内部网关协议IGP（Internal Gateway Protocol）：在一个自治系统<code>AS</code>内部运行</p>
+<p><strong>·</strong>  外部网关协议EGP（Exterior Gateway Protocol）：运行于不同自治系统之间，BGP时目前最常用的EGP协议。</p>
+<p><img src="/../images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE.PNG" alt="动态路由协议"></p>
+<br>
+
+<h2 id="8-路由迭代"><a href="#8-路由迭代" class="headerlink" title="8.路由迭代"></a>8.路由迭代</h2><p>路由必须有智联的下一跳才能够转发，静态路由或BGP路由的下一跳可能不是直连的邻居，因此需要计算出一个直连的下一跳，这个过程称为路由迭代。</p>
+<p><img src="/../images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E8%BF%AD%E4%BB%A3.PNG" alt="路由迭代"></p>
+<br>
+
+<h1 id="Ⅱ-IP路由高级应用"><a href="#Ⅱ-IP路由高级应用" class="headerlink" title="Ⅱ - IP路由高级应用"></a>Ⅱ - IP路由高级应用</h1><h2 id="9-路由引入"><a href="#9-路由引入" class="headerlink" title="9.路由引入"></a>9.路由引入</h2><p>路由引入是指将路由信息从一种路由协议发布到另一种路由协议的操作。</p>
+<p><strong>·</strong>  通过路由引入，可以实现路由信息在不同路由协议间传递。</p>
+<p><strong>·</strong>  执行路由引入时，还可以部署路由控制，从而实现对业务流量的灵活把控。</p>
+<p><strong>·</strong>  在路由引入时，如果将A协议路由引入到B协议路由，那么要在B协议路由中进行引入配置</p>
+<p><strong>·</strong>  在路由引入时需注意：</p>
+<p>1、路由的优先级</p>
+<p>2、路由回灌</p>
+<p>3、路由度量值</p>
+<p>命令：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">Huawei-ospf-100</span>] import-route &#123;bgp | direct | <span class="keyword">static</span> | isis [ process-id-isis ] | ospf [ process-id-ospf ]&#125;</span><br><span class="line"><span class="comment">//在OSPF视图下，引入BGP/直连/静态/IS-IS/OSPF其他进程路由。</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="10-路由优先级"><a href="#10-路由优先级" class="headerlink" title="10.路由优先级"></a>10.路由优先级</h2><p>华为定义的路由优先级：</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Direct：<span class="number">0</span></span><br><span class="line">OSPF：<span class="number">10</span></span><br><span class="line">IS-IS：<span class="number">15</span></span><br><span class="line">Static：<span class="number">60</span></span><br><span class="line">OSPF ASE：<span class="number">150</span></span><br><span class="line">OSPF NSSA：<span class="number">150</span></span><br><span class="line">IBGP：<span class="number">255</span></span><br><span class="line">EBGP：<span class="number">255</span></span><br><span class="line"><span class="comment">//不同厂商定义的优先级可能不同</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="11-路由回灌"><a href="#11-路由回灌" class="headerlink" title="11.路由回灌"></a>11.路由回灌</h2><p><img src="/../images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E5%9B%9E%E7%81%8C.PNG" alt="路由回灌"></p>
+<p><strong>·</strong>  R1将直连路由10.1.1.0/24引入到OSPF中。</p>
+<p><strong>·</strong>  10.1.1.0/24网段路由全OSPF域内通告。</p>
+<p><strong>·</strong>  R2在IS-IS进程中引入OSPF路由。</p>
+<p><strong>·</strong>  10.1.1.0/24网段路由全IS-IS域内通告。</p>
+<p><strong>·</strong>  R3在OSPF进程中引入IS-IS路由。</p>
+<p><strong>·</strong>  10.1.1.0/24网段路由再次被通告进OSPF域内，形成路由回灌。</p>
+<h2 id="12-路由度量值"><a href="#12-路由度量值" class="headerlink" title="12.路由度量值"></a>12.路由度量值</h2><p><img src="/../images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E5%BA%A6%E9%87%8F%E5%80%BC.PNG" alt="路由度量值"></p>
+<p><strong>·</strong>  不同的路由协议对路由度量值的定义不同，在引入时要考虑到度量值的定义。</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <!-- <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2022/11/04/HCIP_datacom/3.HCIP-datacom%20IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/" title="2、IP路由基础" target="_blank" rel="external">http://example.com/2022/11/04/HCIP_datacom/3.HCIP-datacom IP路由基础/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote> -->
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/1024-byteeeee" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/1024-byteeeee" target="_blank"><span class="text-dark">Solomon</span><small class="ml-1x">生命的遗产是对知识的更新</small></a></h3>
+        <div>是鸟吗？是飞机吗？是 A Minecraft Server!</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/11/05/HCIP_datacom/4.OSPF%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/" title="3、OSPF基础介绍"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2022/11/02/HCIP_datacom/2.HCIP-datacom%20%E8%AE%A4%E8%AF%86%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87/" title="1、认识网络设备"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="qq,wechat,qzone" data-mobile-sites="wechat,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/1024-byteeeee" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        <div> ©2022 Solomon </div>
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+
+
+  <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.3.5/dist/jquery.fancybox.min.js"></script>
+  <script>
+  //利用 FancyBox 实现点击图片放大
+  $(document).ready(function() {
+    $('article img').not('[hidden]').not('.panel-body img').each(function() {
+      var $image = $(this);
+      var imageCaption = $image.attr('alt');
+      var $imageWrapLink = $image.parent('a');
+      if ($imageWrapLink.length < 1) {
+        var src = this.getAttribute('src');
+        var idx = src.lastIndexOf('?');
+        if (idx != -1) {
+          src = src.substring(0, idx);
+        }
+        $imageWrapLink = $image.wrap('<a href="' + src + '"></a>').parent('a');
+      }
+      $imageWrapLink.attr('data-fancybox', 'images');
+      if (imageCaption) {
+        $imageWrapLink.attr('data-caption', imageCaption);
+      }
+    });
+    $().fancybox({
+      selector: '[data-fancybox="images"]',
+      hash: false,
+      loop: false,
+    });
+  });
+  </script>
+
+
+
+
+
+
+<div id="go-top"></div>
+<style type="text/css">
+#go-top {
+ width:40px;height:36px;
+ background-color:#70a3e6;
+ position:relative;
+ border-radius:2px;
+ position:fixed;right:10px;bottom:60px;
+ cursor:pointer;display:none;
+}
+#go-top:after {
+ content:" ";
+ position:absolute;left:14px;top:14px;
+ border-top:2px solid #fff;border-right:2px solid #fff;
+ width:12px;height:12px;
+ transform:rotate(-45deg);
+}
+#go-top:hover {
+ background-color:#1b55a0;
+}
+</style>
+<script>
+$(function () {
+  var top=$("#go-top");
+  $(window).scroll(function () {
+    ($(window).scrollTop() > 300) ? top.show(300) : top.hide(200);
+    $("#go-top").click(function () {
+      $('body,html').animate({scrollTop:0});
+      return false();
+    })
+  });
+});
+</script>
+
+  
+    <style>
+      .copy-btn {
+        display: inline-block;
+        padding: 6px 12px;
+        font-size: 13px;
+        font-weight: 700;
+        line-height: 20px;
+        color: #333;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        background-color: #eee;
+        background-image: linear-gradient(#fcfcfc, #eee);
+        border: 1px solid #d5d5d5;
+        border-radius: 3px;
+        user-select: none;
+        outline: 0;
+      }
+  
+      .highlight-wrap .copy-btn {
+        transition: opacity .3s ease-in-out;
+        opacity: 0;
+        padding: 2px 6px;
+        position: absolute;
+        right: 4px;
+        top: 8px;
+        z-index: 2;
+      }
+  
+      .highlight-wrap:hover .copy-btn,
+          .highlight-wrap .copy-btn:focus {
+        opacity: 1
+      }
+  
+      .highlight-wrap {
+        position: relative;
+      }
+    </style>
+    
+    <script>
+      addLoadEvent(()=>{
+        $('.highlight').each(function (i, e) {
+          var $wrap = $('<div>').addClass('highlight-wrap')
+          $(e).after($wrap)
+          $wrap.append($('<button>').addClass('copy-btn').append('copy').on('click', function (e) {
+            var code = $(this).parent().find(".code")[0].innerText
+            
+                code += "false"
+            
+            var ta = document.createElement('textarea')
+            document.body.appendChild(ta)
+            ta.style.position = 'absolute'
+            ta.style.top = '0px'
+            ta.style.left = '0px'
+            ta.value = code
+            ta.select()
+            ta.focus()
+            var result = document.execCommand('copy')
+            document.body.removeChild(ta)
+            
+              if(result)$(this).text('copy success')
+              else $(this).text('copy failed')
+            
+            $(this).blur()
+          })).on('mouseleave', function (e) {
+            var $b = $(this).find('.copy-btn')
+            setTimeout(function () {
+              $b.text('copy')
+            }, 300)
+          }).append(e)
+        })
+      })
+    </script>
+  
+
+  <!-- 背景动画 -->
+  <script type="text/javascript" color="0,0,0" opacity='0.8' zIndex="-2" count="88" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  <!-- 
+  color: 线条颜色，默认：‘0，0，0’；三个数字分别为(R,G,B),注意使用，分割
+  opacity: 线条透明度0~1,默认0.5
+  count: 线条总数量，默认150
+  zIndex: 背景的z-Index属性，css用于控制所在层的位置，默认-1 
+  -->
+</body>
+</html>
