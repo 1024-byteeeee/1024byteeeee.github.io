@@ -5540,9 +5540,9 @@ pre,
   margin: 10px 0;
   padding: 15px 10px;
   overflow: auto;
-  font-size: 18px;
+  font-size: 17px;
   font-family: "Consolas";
-  font-weight: bold;
+  font-weight: normal;
   color: #b2ccd6;
   line-height: 1.5;
 }

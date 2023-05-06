@@ -17,12 +17,12 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>2、IP路由基础 | Solomon</title>
+  <title>2、IP路由基础 | 1024_byteeeee</title>
   <meta name="description" content="前言· 当路由器收到一个IP数据包，路由器会根据数据包的目的IP地址查找FIB（Forwarding Information Base，转发信息库）表，找到“最匹配”的路由条目后，将数据包根据路由条目所指示的出接口或下一跳转发出去。   · 路由器获取路由的方式有三种，分别是动态路由、静态路由、直连路由。一个网络中可能会同时存在这三种方式，那么采用不同方式获取路由的路由器之间如何实现路由可达？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2、IP路由基础">
 <meta property="og:url" content="http://example.com/2022/11/04/HCIP_datacom/3.HCIP-datacom%20IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/index.html">
-<meta property="og:site_name" content="Solomon">
+<meta property="og:site_name" content="1024_byteeeee">
 <meta property="og:description" content="前言· 当路由器收到一个IP数据包，路由器会根据数据包的目的IP地址查找FIB（Forwarding Information Base，转发信息库）表，找到“最匹配”的路由条目后，将数据包根据路由条目所指示的出接口或下一跳转发出去。   · 路由器获取路由的方式有三种，分别是动态路由、静态路由、直连路由。一个网络中可能会同时存在这三种方式，那么采用不同方式获取路由的路由器之间如何实现路由可达？">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E8%A1%A8.PNG">
@@ -35,15 +35,15 @@
 <meta property="og:image" content="http://example.com/images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E5%9B%9E%E7%81%8C.PNG">
 <meta property="og:image" content="http://example.com/images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E5%BA%A6%E9%87%8F%E5%80%BC.PNG">
 <meta property="article:published_time" content="2022-11-03T19:45:42.000Z">
-<meta property="article:modified_time" content="2022-11-09T21:31:18.697Z">
-<meta property="article:author" content="Solomon">
+<meta property="article:modified_time" content="2023-05-06T02:56:27.114Z">
+<meta property="article:author" content="1024_byteeeee">
 <meta property="article:tag" content="HCIP-datacom">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/HCIP-datacom-2%E3%80%81IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/%E8%B7%AF%E7%94%B1%E8%A1%A8.PNG">
   <!-- Canonical links -->
   <link rel="canonical" href="http://example.com/2022/11/04/HCIP_datacom/3.HCIP-datacom%20IP%E8%B7%AF%E7%94%B1%E5%9F%BA%E7%A1%80/index.html">
   
-    <link rel="alternate" href="/atom.xml" title="Solomon" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="1024_byteeeee" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png" type="image/x-icon">
@@ -60,7 +60,7 @@
 <meta name="generator" content="Hexo 5.4.2"></head>
 
 
-<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
   <header class="header" itemscope itemtype="http://schema.org/WPHeader">
   <div class="slimContent">
     <div class="navbar-header">
@@ -70,8 +70,8 @@
         <a id="avatar" href="https://github.com/1024-byteeeee" target="_blank">
           <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
         </a>
-        <h2 id="name" class="hidden-xs hidden-sm">Solomon</h2>
-        <h3 id="title" class="hidden-xs hidden-sm hidden-md">生命的遗产是对知识的更新</h3>
+        <h2 id="name" class="hidden-xs hidden-sm">1024_byteeeee</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md"></h3>
         <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> A Minecraft Server, China</small>
       </div>
       
@@ -160,16 +160,6 @@
           </a>
         </li>
         
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about">
-            
-            <i class="icon icon-cup-fill"></i>
-            
-            <span class="menu-title">关于</span>
-          </a>
-        </li>
-        
       </ul>
       
 	
@@ -192,7 +182,7 @@
     <div class="widget-body">
         <div id="board">
             <div class="content">
-                这里是Solomon的博客<br>欢迎加入A Minecraft Server技术生存服务器<br>官网：mcams.club
+                这里是1024_byteeeee的博客
             </div>
         </div>
     </div>
@@ -491,8 +481,8 @@
         </a>
       </div>
       <div class="media-body">
-        <h3 class="media-heading"><a href="https://github.com/1024-byteeeee" target="_blank"><span class="text-dark">Solomon</span><small class="ml-1x">生命的遗产是对知识的更新</small></a></h3>
-        <div>是鸟吗？是飞机吗？是 A Minecraft Server!</div>
+        <h3 class="media-heading"><a href="https://github.com/1024-byteeeee" target="_blank"><span class="text-dark">1024_byteeeee</span><small class="ml-1x"></small></a></h3>
+        <div>生命的遗产是对知识的更新</div>
       </div>
     </figure>
   </div>
@@ -554,10 +544,11 @@
     <div class="copyright">
     	
         <div class="publishby">
-        <div> ©2022 Solomon </div>
+        <div> ©2023 1024_byteeeee </div>
         </div>
     </div>
 </footer>
+
   <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <script>
 window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')

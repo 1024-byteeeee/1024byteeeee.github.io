@@ -1,4 +1,4 @@
-# menu
+﻿# menu
 menu:
   Home: .
   Archives: archives  # 归档
@@ -7,7 +7,7 @@ menu:
   Repository: repository  # github repositories
   #Books: books  # 豆瓣书单
   #Links: links  # 友链
-  About: about  # 关于
+  #About: about  # 关于
 
 # Enable/Disable menu icons
 menu_icons:
@@ -31,14 +31,14 @@ site:
     width: 40
     height: 40
     url: ../images/logo.png
-  title: Solomon # 页面title
+  title: 1024_byteeeee # 页面title
   favicon: /favicon.png
-  board: 这里是Solomon的博客<br>欢迎加入A Minecraft Server技术生存服务器<br>官网：mcams.club # 站点公告
+  board: 这里是1024_byteeeee的博客 # 站点公告
   copyright: false # 底部版权信息
 
 # config
 config:
-  skin: theme-black # 主题颜色 theme-black theme-blue theme-green theme-purple
+  skin: # 主题颜色 theme-black theme-blue theme-green theme-purple
   layout: main-center # 布局方式 main-left main-center main-right
   toc: true # 是否开启文章章节目录导航
   menu_highlight: true # 是否开启当前菜单高亮显示
@@ -202,9 +202,9 @@ profile:
   articleSelfBlock: true # 关闭文章下方的自我介绍
   avatar: images/avatar.jpg
   gravatar: # Gravatar email address, if you enable Gravatar, your avatar config will be overriden
-  author: Solomon
-  author_title: 生命的遗产是对知识的更新
-  author_description: 是鸟吗？是飞机吗？是 A Minecraft Server!
+  author: 1024_byteeeee
+  author_title: 
+  author_description: 生命的遗产是对知识的更新
   location: A Minecraft Server, China
   follow: https://github.com/1024-byteeeee
   # Social Links
@@ -223,9 +223,7 @@ profile:
     HUAWEI - RS: 
     CISCO - RS: 
     Windows Server 2008 - 2022:
-    Linux:
-    Java（略懂）:  
-    C++（几乎忘光光）: 
+    Linux: 
   # My Personal Links
   links:
     Github: https://github.com/1024-byteeeee
