@@ -390,7 +390,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://1024byteeeee.top/posts/57899.html">
+    <link itemprop="mainEntityOfPage" href="https://1024byteeeee.top/posts/3452.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -408,7 +408,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/57899.html" class="post-title-link" itemprop="url">在PowerShell中使用title命令</a>
+          <a href="/posts/3452.html" class="post-title-link" itemprop="url">Hexo主题修改日记</a>
         </h2>
 
         <div class="post-meta-container">
@@ -434,7 +434,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%B7%A5%E7%A8%8B%EF%BC%88%E6%9D%82%E9%A1%B9%EF%BC%89/" itemprop="url" rel="index"><span itemprop="name">网络工程（杂项）</span></a>
+          <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
         </span>
     </span>
 
@@ -445,14 +445,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>210</span>
+      <span>1.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -463,15 +463,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h4 id="在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令"><a href="#在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令" class="headerlink" title="在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令"></a>在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$host</span>.ui.RawUI.WindowTitle=<span class="string">&quot;自定义标题&quot;</span></span><br></pre></td></tr></table></figure>
-<h4 id="使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用"><a href="#使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用" class="headerlink" title="使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用"></a>使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">test-path</span> <span class="variable">$profile</span></span><br></pre></td></tr></table></figure>
-<h4 id="如果返回值为false则执行如下命令"><a href="#如果返回值为false则执行如下命令" class="headerlink" title="如果返回值为false则执行如下命令"></a>如果返回值为false则执行如下命令</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">New-Item</span> <span class="literal">-path</span> <span class="variable">$profile</span> <span class="literal">-type</span> file <span class="literal">-force</span></span><br></pre></td></tr></table></figure>
-<h4 id="如果返回值为true则执行如下命令"><a href="#如果返回值为true则执行如下命令" class="headerlink" title="如果返回值为true则执行如下命令"></a>如果返回值为true则执行如下命令</h4><p>注：在执行此命令前需要电脑内安装了Visual Studio Code</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code <span class="variable">$profile</span> </span><br></pre></td></tr></table></figure>
-<h4 id="运行完之后会打开一个profile文件，在该文件内输入以下代码"><a href="#运行完之后会打开一个profile文件，在该文件内输入以下代码" class="headerlink" title="运行完之后会打开一个profile文件，在该文件内输入以下代码"></a>运行完之后会打开一个profile文件，在该文件内输入以下代码</h4>
+          <h3 id="1-添加背景动画"><a href="#1-添加背景动画" class="headerlink" title="1.添加背景动画"></a>1.添加背景动画</h3><p>背景动画基于canvas，在<code>\themes\pure\layout\layout.ejs</code>中添加</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 背景动画 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">color</span>=<span class="string">&quot;0,0,0&quot;</span> <span class="attr">opacity</span>=<span class="string">&#x27;0.8&#x27;</span> <span class="attr">zIndex</span>=<span class="string">&quot;-2&quot;</span> <span class="attr">count</span>=<span class="string">&quot;88&quot;</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">  color: 线条颜色，默认：‘0，0，0’；三个数字分别为(R,G,B),注意使用，分割</span></span><br><span class="line"><span class="comment">  opacity: 线条透明度0~1,默认0.5</span></span><br><span class="line"><span class="comment">  count: 线条总数量，默认150</span></span><br><span class="line"><span class="comment">  zIndex: 背景的z-Index属性，css用于控制所在层的位置，默认-1 </span></span><br><span class="line"><span class="comment">  --&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-更改代码块样式"><a href="#2-更改代码块样式" class="headerlink" title="2.更改代码块样式"></a>2.更改代码块样式</h3><p>修改<code>.\themes\pure\source\css\style.css</code></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pre,</span><br><span class="line"><span class="selector-class">.highlight</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#cfcbcb</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">15px</span> <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">overflow</span>: auto;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">18px</span>;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;Consolas&quot;</span>;</span><br><span class="line">  <span class="attribute">font-weight</span>: bold;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#4d4d4c</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1.5</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-添加代码块一键复制按钮-原文"><a href="#3-添加代码块一键复制按钮-原文" class="headerlink" title="3.添加代码块一键复制按钮[原文]"></a>3.添加代码块一键复制按钮[<a target="_blank" rel="noopener" href="https://blog.iwwee.com/posts/hexo-optimize.html#%E4%B8%BA%E4%BB%A3%E7%A0%81%E5%9D%97%E5%A2%9E%E5%8A%A0%E5%A4%8D%E5%88%B6%E6%8C%89%E9%92%AE">原文</a>]</h3><p>（1）、增加全局函数addLoadEvent  </p>
+<p>在<code>/themes/pure/source/js</code>目录下打开<code>application.js</code>，在文件最后追加</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">addLoadEvent</span>(<span class="params">func</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> oldonload = <span class="variable language_">window</span>.<span class="property">onload</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="variable language_">window</span>.<span class="property">onload</span> != <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">        <span class="variable language_">window</span>.<span class="property">onload</span> = func;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">window</span>.<span class="property">onload</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="title function_">oldonload</span>();</span><br><span class="line">            <span class="title function_">func</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/57899.html#more" rel="contents">
+              <a class="btn" href="/posts/3452.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -619,7 +622,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://1024byteeeee.top/posts/3452.html">
+    <link itemprop="mainEntityOfPage" href="https://1024byteeeee.top/posts/57899.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -637,7 +640,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/3452.html" class="post-title-link" itemprop="url">Hexo主题修改日记</a>
+          <a href="/posts/57899.html" class="post-title-link" itemprop="url">在PowerShell中使用title命令</a>
         </h2>
 
         <div class="post-meta-container">
@@ -663,7 +666,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%B7%A5%E7%A8%8B%EF%BC%88%E6%9D%82%E9%A1%B9%EF%BC%89/" itemprop="url" rel="index"><span itemprop="name">网络工程（杂项）</span></a>
         </span>
     </span>
 
@@ -674,14 +677,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
+      <span>210</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
+      <span>1 分钟</span>
     </span>
 </div>
 
@@ -692,18 +695,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="1-添加背景动画"><a href="#1-添加背景动画" class="headerlink" title="1.添加背景动画"></a>1.添加背景动画</h3><p>背景动画基于canvas，在<code>\themes\pure\layout\layout.ejs</code>中添加</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 背景动画 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">color</span>=<span class="string">&quot;0,0,0&quot;</span> <span class="attr">opacity</span>=<span class="string">&#x27;0.8&#x27;</span> <span class="attr">zIndex</span>=<span class="string">&quot;-2&quot;</span> <span class="attr">count</span>=<span class="string">&quot;88&quot;</span> <span class="attr">src</span>=<span class="string">&quot;//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">  color: 线条颜色，默认：‘0，0，0’；三个数字分别为(R,G,B),注意使用，分割</span></span><br><span class="line"><span class="comment">  opacity: 线条透明度0~1,默认0.5</span></span><br><span class="line"><span class="comment">  count: 线条总数量，默认150</span></span><br><span class="line"><span class="comment">  zIndex: 背景的z-Index属性，css用于控制所在层的位置，默认-1 </span></span><br><span class="line"><span class="comment">  --&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="2-更改代码块样式"><a href="#2-更改代码块样式" class="headerlink" title="2.更改代码块样式"></a>2.更改代码块样式</h3><p>修改<code>.\themes\pure\source\css\style.css</code></p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">pre,</span><br><span class="line"><span class="selector-class">.highlight</span> &#123;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#cfcbcb</span>;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">10px</span> <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">15px</span> <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">overflow</span>: auto;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">18px</span>;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;Consolas&quot;</span>;</span><br><span class="line">  <span class="attribute">font-weight</span>: bold;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#4d4d4c</span>;</span><br><span class="line">  <span class="attribute">line-height</span>: <span class="number">1.5</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-添加代码块一键复制按钮-原文"><a href="#3-添加代码块一键复制按钮-原文" class="headerlink" title="3.添加代码块一键复制按钮[原文]"></a>3.添加代码块一键复制按钮[<a target="_blank" rel="noopener" href="https://blog.iwwee.com/posts/hexo-optimize.html#%E4%B8%BA%E4%BB%A3%E7%A0%81%E5%9D%97%E5%A2%9E%E5%8A%A0%E5%A4%8D%E5%88%B6%E6%8C%89%E9%92%AE">原文</a>]</h3><p>（1）、增加全局函数addLoadEvent  </p>
-<p>在<code>/themes/pure/source/js</code>目录下打开<code>application.js</code>，在文件最后追加</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">addLoadEvent</span>(<span class="params">func</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> oldonload = <span class="variable language_">window</span>.<span class="property">onload</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> <span class="variable language_">window</span>.<span class="property">onload</span> != <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">        <span class="variable language_">window</span>.<span class="property">onload</span> = func;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable language_">window</span>.<span class="property">onload</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="title function_">oldonload</span>();</span><br><span class="line">            <span class="title function_">func</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h4 id="在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令"><a href="#在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令" class="headerlink" title="在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令"></a>在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$host</span>.ui.RawUI.WindowTitle=<span class="string">&quot;自定义标题&quot;</span></span><br></pre></td></tr></table></figure>
+<h4 id="使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用"><a href="#使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用" class="headerlink" title="使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用"></a>使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">test-path</span> <span class="variable">$profile</span></span><br></pre></td></tr></table></figure>
+<h4 id="如果返回值为false则执行如下命令"><a href="#如果返回值为false则执行如下命令" class="headerlink" title="如果返回值为false则执行如下命令"></a>如果返回值为false则执行如下命令</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">New-Item</span> <span class="literal">-path</span> <span class="variable">$profile</span> <span class="literal">-type</span> file <span class="literal">-force</span></span><br></pre></td></tr></table></figure>
+<h4 id="如果返回值为true则执行如下命令"><a href="#如果返回值为true则执行如下命令" class="headerlink" title="如果返回值为true则执行如下命令"></a>如果返回值为true则执行如下命令</h4><p>注：在执行此命令前需要电脑内安装了Visual Studio Code</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code <span class="variable">$profile</span> </span><br></pre></td></tr></table></figure>
+<h4 id="运行完之后会打开一个profile文件，在该文件内输入以下代码"><a href="#运行完之后会打开一个profile文件，在该文件内输入以下代码" class="headerlink" title="运行完之后会打开一个profile文件，在该文件内输入以下代码"></a>运行完之后会打开一个profile文件，在该文件内输入以下代码</h4>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/3452.html#more" rel="contents">
+              <a class="btn" href="/posts/57899.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
