@@ -4,106 +4,6 @@
   
     
     <entry>
-      <title>8.网络管理与QoS</title>
-      <link href="/posts/17d3165a.html"/>
-      <url>/posts/17d3165a.html</url>
-      
-        <content type="html"><![CDATA[<h1 id="Ⅰ-网络管理基础"><a href="#Ⅰ-网络管理基础" class="headerlink" title="Ⅰ - 网络管理基础"></a>Ⅰ - 网络管理基础</h1><h2 id="1-网络管理功能"><a href="#1-网络管理功能" class="headerlink" title="1.网络管理功能"></a>1.网络管理功能</h2><ul><li>网络管理五大功能域：故障管理、配置管理、计费管理、性能管理和安全管理。</li><li>故障管理目的：尽快发现故障，找出故障原因，以便采取补救措施。</li><li>网管系统中代理与监视器的两种通信方式：轮询、事件报告。</li></ul><h2 id="2-网络管理系统组成"><a href="#2-网络管理系统组成" class="headerlink" title="2.网络管理系统组成"></a>2.网络管理系统组成</h2><ul><li>网络管理站：简单理解就是安装网管软件的服务器或者PC。</li><li>管理代理（Agent）：位于被管理设备的内部，把网管站的要求转换为本地特有命令，完成网管站的指示，agent也可以把自身系统中的日志上报网管站。</li><li>网络管理协议：用于网络管理站和管理代理之间传递信息，常见的有SNMP、netconf等。</li><li>管理信息库：（Management Information Base，MIB）是一个信息储存库，结构化定义被管对象的具体细节。</li></ul><p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E4%B8%8EQoS/%E7%AE%A1%E7%90%86%E7%AB%99-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%9E%8B.png" alt="管理站-代理模型"></p><h2 id="3-管理数据库MIB"><a href="#3-管理数据库MIB" class="headerlink" title="3.管理数据库MIB"></a>3.管理数据库MIB</h2><ul><li>被管理<strong>对象标识符OID</strong>。</li></ul><p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E4%B8%8EQoS/%E6%B3%A8%E5%86%8C%E5%B1%82%E6%AC%A1.png" alt="注册层次"></p><h1 id="Ⅱ-网管协议SNMP"><a href="#Ⅱ-网管协议SNMP" class="headerlink" title="Ⅱ - 网管协议SNMP"></a>Ⅱ - 网管协议SNMP</h1><h2 id="1-网络管理协议五大标准"><a href="#1-网络管理协议五大标准" class="headerlink" title="1.网络管理协议五大标准"></a>1.网络管理协议五大标准</h2><ul><li>ISO制定：<strong>CMIS&#x2F;CMIP</strong>公共管理信息服务规范。</li><li>基于TPC&#x2F;IP：简单网络管理协议<strong>SNMPv1、SNMPv2、SNMPv3</strong>。</li><li>基于局域网：远程监控网络RMON（RMON-1、RMON-2）。</li><li>IEEE制定：基于物理层和数据链路层<strong>CMOL</strong>。</li><li>ITU-T：电信网络管理标准<strong>TMN</strong>。</li></ul><h2 id="2-SNMPv1"><a href="#2-SNMPv1" class="headerlink" title="2.SNMPv1"></a>2.SNMPv1</h2><ul><li>SNMP为<strong>应用层</strong>协议，运行在<strong>UDP</strong>上，client端口161，server端口162。</li><li><strong>不可靠，但效率高</strong>，不会因为网络管理增加太多网络负载。</li><li>每个代理进程管理若干被管理对象，并且与某些管理站建立<strong>团体（community）</strong>关系。</li></ul><p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86%E4%B8%8EQoS/SNMPv1%E7%9A%84%E5%9B%A2%E4%BD%93%E5%85%B3%E7%B3%BB.png" alt="SNMPv1的团体关系"></p><h2 id="3-SNMP协议的操作"><a href="#3-SNMP协议的操作" class="headerlink" title="3.SNMP协议的操作"></a>3.SNMP协议的操作</h2><table><thead><tr><th align="center">操作编号</th><th align="center">分类</th><th align="center">名称</th><th align="center">用途</th></tr></thead><tbody><tr><td align="center">0</td><td align="center">网管找客户端</td><td align="center">get-request</td><td align="center">查询一个或多个变量的值</td></tr><tr><td align="center">1</td><td align="center">网管找客户端</td><td align="center">get-next-request</td><td align="center">再MIB树上检索下一个变量</td></tr><tr><td align="center">2</td><td align="center">网管找客户端</td><td align="center">set-request</td><td align="center">一个或多个变量的值进行设置</td></tr><tr><td align="center">3</td><td align="center">客户端反馈</td><td align="center">get-response</td><td align="center">对get&#x2F;set报文做出响应</td></tr><tr><td align="center">4</td><td align="center">客户端反馈</td><td align="center">trap</td><td align="center">向管理进程报告代理发生的事件</td></tr></tbody></table><ul><li>前三个可以简写为get、get-next-set。</li><li>客户端使用<strong>161端口</strong>来接收get&#x2F;set，服务器使用<strong>162端口</strong>来接收trap。</li></ul><h2 id="4-SNMPv1的机制与问题"><a href="#4-SNMPv1的机制与问题" class="headerlink" title="4.SNMPv1的机制与问题"></a>4.SNMPv1的机制与问题</h2><ul><li>SNMP网络管理中，管理站和代理站之间可以是<strong>一对多</strong>关系，也可以是<strong>多对一</strong>关系。</li><li>RFC1157规定SNMP基本认证和控制机制，通过<strong>团体名验证</strong>实现。</li><li>团体名明文传输，不安全。</li></ul><h2 id="5-SNMPv2"><a href="#5-SNMPv2" class="headerlink" title="5.SNMPv2"></a>5.SNMPv2</h2><ul><li><p>SNMPv2定义了GetBulk和inform两个新协议操作。</p><ul><li><p>GetBulk：</p><p>快速获取大块数据。</p></li><li><p>inform：</p><p>允许一个NMS向另一个NMS发送Trap信息&#x2F;接收响应消息。</p></li></ul></li></ul><h2 id="6-SNMPv3"><a href="#6-SNMPv3" class="headerlink" title="6.SNMPv3"></a>6.SNMPv3</h2><ul><li>SNMPv3重新定义了<strong>网络管理框架和安全机制</strong>。</li><li>重新定义网络管理框架：将前两版中的管理站和代理统一叫做SNMP实体（entity）。</li><li>安全机制：认证和加密传输。<ul><li>时间序列模块：提供重放攻击防护。</li><li>认证模块：完整性和数据源认证，使用SHA或MD5。</li><li>加密模块：防止内容泄露，使用DES算法。</li></ul></li><li>SNMPv3防护拒绝服务和通信分析。</li></ul><h1 id="Ⅲ-网络管理命令"><a href="#Ⅲ-网络管理命令" class="headerlink" title="Ⅲ - 网络管理命令"></a>Ⅲ - 网络管理命令</h1><h2 id="1-网络诊断命令ipconfig"><a href="#1-网络诊断命令ipconfig" class="headerlink" title="1.网络诊断命令ipconfig"></a>1.网络诊断命令ipconfig</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ipconfig /all<span class="comment">//显示IP、掩码、网关/MAC地址，DHCP等详细信息</span></span><br><span class="line">ipconfig /renew<span class="comment">//更新DHCP配置，重新获取IP地址</span></span><br><span class="line">ipconfig /release<span class="comment">//释放DHCP获得的IP地址</span></span><br><span class="line">ipconfig /flushdns<span class="comment">//清除DNS缓存信息</span></span><br><span class="line">ipconfig /displaydns<span class="comment">//显示DNS缓存信息 </span></span><br></pre></td></tr></table></figure><h2 id="2-故障诊断-ping-amp-traceroute"><a href="#2-故障诊断-ping-amp-traceroute" class="headerlink" title="2.故障诊断-ping&amp;traceroute"></a>2.故障诊断-ping&amp;traceroute</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ping -t<span class="comment">//一直ping，直到按下ctrl+c中断</span></span><br><span class="line">ping -a<span class="comment">//将IP解析为主机名</span></span><br><span class="line">ping -n Conunt<span class="comment">//设置ping包的个数</span></span><br><span class="line">tracert<span class="comment">//跟踪网络传输路径（原理：递增TTL字段的ICMP回送错误报文）</span></span><br><span class="line">pathping<span class="comment">//结合了ping和tracert功能，不显示显示通信线路上每个子网的延时和丢包率。</span></span><br></pre></td></tr></table></figure><h2 id="3-ARP"><a href="#3-ARP" class="headerlink" title="3.ARP"></a>3.ARP</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">arp -a<span class="comment">//显示当前ARP缓存表</span></span><br><span class="line">arp -d<span class="comment">//删除某条ARP缓存</span></span><br><span class="line">arp -s<span class="comment">//静态绑定ARP</span></span><br></pre></td></tr></table></figure><h2 id="4-netstat"><a href="#4-netstat" class="headerlink" title="4.netstat"></a>4.netstat</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">netstat<span class="comment">//显示TCP连接，侦听的端口及统计信息</span></span><br><span class="line">netstat -n<span class="comment">//显示活动的TCP连接</span></span><br><span class="line">netstat -r<span class="comment">//显示IP路由表，与route print一样</span></span><br></pre></td></tr></table></figure><h2 id="5-route和nslookup"><a href="#5-route和nslookup" class="headerlink" title="5.route和nslookup"></a>5.route和nslookup</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">route print<span class="comment">//显示路由表</span></span><br><span class="line">route add<span class="comment">//添加静态路由（重启后丢失）</span></span><br><span class="line">route add -p<span class="comment">//与add联合使用（重启后还在）</span></span><br><span class="line">nslookup<span class="comment">//显示DNS查询信息，诊断，排查故障</span></span><br></pre></td></tr></table></figure><h1 id="Ⅳ-QoS服务质量"><a href="#Ⅳ-QoS服务质量" class="headerlink" title="Ⅳ - QoS服务质量"></a>Ⅳ - QoS服务质量</h1><h2 id="1-QoS服务模型"><a href="#1-QoS服务模型" class="headerlink" title="1.QoS服务模型"></a>1.QoS服务模型</h2><ul><li><p>QoS（服务质量）是为指定的网络通信提供更好的服务能力, 是用来解决网络延迟和阻塞等问题的一种技术。通常QoS提供以下三种服务模型：</p><ul><li><p>Best-Effort service（尽力而为服务模型）：</p><p>Best-Effort（尽力而为服务模型）是一个单一的服务模型，也是最简单的服务模型。对Best-Effort服务模型，网络尽最大的可能来发送报文。但对延时、可靠性等性能丌提供任何保证。Best-Effort服务模型是网络的缺省服务模型，通过FIFO（first in first out 先入先出）队列来实现。它适用于绝大多数网络应用，如FTP、E-Mail等。</p></li><li><p>Integrated service（综合服务模型，Int-Serv）：</p><p>Int-Serv综合服务模型，它可以满足多种QoS需求。该模型使用资源预留协议（RSVP）， <strong>RSVP运行在从源端到目的端的每个设备上</strong>，可以监视每个流，以防止其消耗资源过多。这种体系能够明确区分并保证每一个业务流的服务质量，为网络提供最细粒度化的服务质量区分。但是，Inter-Serv模型对设备的要求高，当网络中的数据流数量很大时，设备的存储和处理能力会遇到很大的压力。Inter-Serv模型可扩展性差，难以在Internet核心网络实施。</p></li><li><p>Differentiated service（区分服务模型，Diff-Serv）：</p><p>Diff-Serv是一个多服务模型，它可以满足不同的QoS需求。与Int-Serv不同，它<strong>不需要通知网络为每个业务预留资源</strong>。区分服务实现简单，扩展性较好。DiffServ模型的基本思想是根据预先确定的规则对数据流进行分类，给不同类型流量确定不同优先级和操作。</p></li></ul></li></ul>]]></content>
-      
-      
-      <categories>
-          
-          <category> 网络规划设计师 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 网络规划设计师 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>8.动态路由协议</title>
-      <link href="/posts/18116d90.html"/>
-      <url>/posts/18116d90.html</url>
-      
-        <content type="html"><![CDATA[<h1 id="Ⅰ-RIP"><a href="#Ⅰ-RIP" class="headerlink" title="Ⅰ - RIP"></a>Ⅰ - RIP</h1><h2 id="1-RIP协议"><a href="#1-RIP协议" class="headerlink" title="1.RIP协议"></a>1.RIP协议</h2><ul><li>RIP(Routing Information Protocol,路由信息协议）：距离矢量路由协议</li><li>计算跳数：最大15跳，16跳不可达，一般用于小型网络。</li><li>30s周期性更新路由表、180s无更新表示不存在、240s删除路由表。</li><li>支持等价负载均衡和链路冗余，使用UDP的520端口。</li></ul><h2 id="2-RIPv1与RIPv2对比"><a href="#2-RIPv1与RIPv2对比" class="headerlink" title="2.RIPv1与RIPv2对比"></a>2.RIPv1与RIPv2对比</h2><table><thead><tr><th align="center">RIPv1</th><th align="center">RIPv2</th></tr></thead><tbody><tr><td align="center">有类，不携带子网掩码</td><td align="center">无类，携带子网掩码</td></tr><tr><td align="center">广播更新</td><td align="center">组播更新（224.0.0.9）</td></tr><tr><td align="center">周期性更新（30s）</td><td align="center">触发更新</td></tr><tr><td align="center">不支持VLSM、CIDR</td><td align="center">支持VLSM、DIDR</td></tr><tr><td align="center">不提供认证</td><td align="center">提供明文和MD5认证</td></tr></tbody></table><h2 id="3-距离矢量路由协议"><a href="#3-距离矢量路由协议" class="headerlink" title="3.距离矢量路由协议"></a>3.距离矢量路由协议</h2><ul><li>使用距离矢量路由协议的路由器并<strong>不了解网络的拓扑</strong>，该路由器只知道：<ul><li>自身与目的网络之间的距离。</li><li>应该往哪个方向或哪个接口转发数据包。</li></ul></li></ul><h2 id="4-距离矢量路由选择协议的特点"><a href="#4-距离矢量路由选择协议的特点" class="headerlink" title="4.距离矢量路由选择协议的特点"></a>4.距离矢量路由选择协议的特点</h2><ul><li>周期性地<strong>（广播）整张路由表</strong>。</li></ul><h2 id="5-RIP路由的度量值"><a href="#5-RIP路由的度量值" class="headerlink" title="5.RIP路由的度量值"></a>5.RIP路由的度量值</h2><ul><li>RIP以<strong>跳数</strong>作为度量值，虽然简单，但事实上不科学，例如现在有两条路可选，它会选择经过路由器少的那条路，而不是带宽更大的那条路。</li></ul><h2 id="6-路由优先级"><a href="#6-路由优先级" class="headerlink" title="6.路由优先级"></a>6.路由优先级</h2><table><thead><tr><th align="center">路由协议或种类</th><th align="center">相应路由的优先级</th></tr></thead><tbody><tr><td align="center">DIRECT</td><td align="center">0</td></tr><tr><td align="center">OSPF</td><td align="center">10</td></tr><tr><td align="center">IS-IS</td><td align="center">15</td></tr><tr><td align="center">STATIC</td><td align="center">60</td></tr><tr><td align="center">RIP</td><td align="center">100</td></tr><tr><td align="center">OSPF AS E</td><td align="center">150</td></tr><tr><td align="center">OSPF NSSA</td><td align="center">150</td></tr><tr><td align="center">IBGP</td><td align="center">255</td></tr><tr><td align="center">EBGP</td><td align="center">255</td></tr></tbody></table><h2 id="7-RIP防环机制"><a href="#7-RIP防环机制" class="headerlink" title="7.RIP防环机制"></a>7.RIP防环机制</h2><ul><li><p>最大跳数：</p><p>当一个路由条目发送出去跳数自动加1，最大为16跳，16跳时不可达。</p></li><li><p>水平分割：</p><p>一条路由信息不会发送给信息的来源。</p></li><li><p>反向毒化：</p><p>把邻居学习到的路由信息设置为16跳，再发送给那个邻居。</p></li><li><p>抑制定时器和触发更新也可以防止环路。</p></li></ul><h2 id="8-RIP协议总结"><a href="#8-RIP协议总结" class="headerlink" title="8.RIP协议总结"></a>8.RIP协议总结</h2><ul><li>RIP（Routing Information Protocols，路由信息协议）。</li><li>应用较早、使用较为普遍的<strong>内部网关协议</strong>。</li><li>适用于小型网络，是典型的距离矢量路由协议。</li><li>使用UDP 520端口。</li></ul><h1 id="Ⅱ-OSPF"><a href="#Ⅱ-OSPF" class="headerlink" title="Ⅱ - OSPF"></a>Ⅱ - OSPF</h1><h2 id="1-OSPF简介"><a href="#1-OSPF简介" class="headerlink" title="1.OSPF简介"></a>1.OSPF简介</h2><ul><li>Open Shortest Path First，开放式最短路径优先协议。</li><li>OSPF是一种链路状态路由协议。</li><li>Open意味着公有，任何设备厂商都能够支持OSPF，是目前业内使用最广泛的IGP。</li><li>路由器之间<strong>交互的是链路状态信息</strong>，而不是直接交换路由。</li><li>每台OSPF路由器都知晓网络拓扑结构，采用<strong>SPF算法</strong>计算到达目的地的最短路径。</li><li>支持VLSM，支持手工路由汇总。</li></ul><h2 id="2-OSPF基本特点"><a href="#2-OSPF基本特点" class="headerlink" title="2.OSPF基本特点"></a>2.OSPF基本特点</h2><ul><li><p>适应范围广：</p><p>支持各种规模的网络。</p></li><li><p>快速收敛：</p><p>在网络的拓扑结构发生变化后立即发送更新报文，使这一变化在自治系统中同步。</p></li><li><p>无自环：</p><p>使用SPF最短路径树算法进行路由计算，不会产生环路。</p></li><li><p>区域划分：</p><p>允许网络被划分成区域来管理，链路状态数据库仅需和区域内其他路由器保持一致。减小对路由器内存和CPU的消耗。同时区域间传送的路由信息减小，降低网络带宽占用。</p></li></ul><h2 id="3-Router-ID"><a href="#3-Router-ID" class="headerlink" title="3.Router ID"></a>3.Router ID</h2><ul><li><p>Router Identifier，路由器标示符，用于在一个OSPF域中唯一地标识一台路由器，每台运行OSPF的路由器具备Router-ID。</p></li><li><p>相同OSPF区域内，禁止出现两台路由器的Router ID相同。</p></li><li><p>OSPF Router-ID可以通过手工配置的方式，或使用自动获取的方式。自动选取的机制是：若路由器存在loopback接口，则选最大的loopback接口IP地址，若无则选活跃的物理接口中IP地址最大的作RouterID（实际项目手工配置）。</p></li><li><p>Router-ID值遵循稳定第一的原则，不会抢占。如果需要更新RouterID：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">undo ip address//重配进程</span><br><span class="line">reset ospf process//重启进程</span><br></pre></td></tr></table></figure></li></ul><h2 id="4-OSPF-Cost"><a href="#4-OSPF-Cost" class="headerlink" title="4.OSPF Cost"></a>4.OSPF Cost</h2><ul><li>OSPF使用Cost“开销”作为路由度量值。</li><li>OSPF接口cost&#x3D;100M&#x2F;接口带宽，其中100M为OSPF参考带宽，可以被修改。</li><li>每一个激活OSPF的接口都有一个cost值。</li><li>一条OSPF路由的cost值由该路由从起源一路到达本地的所有<strong>入接口cost值的总和</strong>。</li></ul><h2 id="5-OSPF区域"><a href="#5-OSPF区域" class="headerlink" title="5.OSPF区域"></a>5.OSPF区域</h2><ul><li><p>所有非骨干区域必须与骨干区域直连。</p><p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/OSPF%E5%8C%BA%E5%9F%9F.png" alt="OSPF区域"></p></li></ul><h2 id="6-OSPF路由器角色"><a href="#6-OSPF路由器角色" class="headerlink" title="6.OSPF路由器角色"></a>6.OSPF路由器角色</h2><ul><li><p>区域内路由器（IR，Internal Router）：</p><p>在区域内部的路由器。</p></li><li><p>区域边界路由器（ABR，Area Border Router）：</p><p>在区域与区域之间的路由器。</p></li><li><p>骨干路由器（BR，Backbone Router）：</p><p>位于area 0内的路由器。</p></li><li><p>AS边界路由器（AS Boundary Router）：</p><p>位于AS边界（与其他路由协议相邻接位置）的路由器。</p></li></ul><p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/OSPF%E8%B7%AF%E7%94%B1%E5%99%A8%E8%A7%92%E8%89%B2.png" alt="OSPF路由器角色"></p><h2 id="7-OSPF总结"><a href="#7-OSPF总结" class="headerlink" title="7.OSPF总结"></a>7.OSPF总结</h2><ul><li>OSPF(Open Shortest Path First，开放式最短路径优先协议）内部网关协议，链路状态路由协议，通过连通性、距离、时延、带宽等状态计算最佳路径，采用Dijkstra算法（也叫SPF算法）。</li><li>触发式更新、分层路由，支持大型网络。</li><li>Area 0.0.0.0或者Area 0来表示，不是区域1。</li><li>点对点网络上每10秒发送一次hello，在NBMA网络每30秒发送一次，Deadtime为hello时间4倍。</li><li>OSPF系统内几个特殊组播地址：<ul><li>224.0.0.1–在本地子网的所有主机。</li><li>224.0.0.2–在本地子网的所有路由器。</li><li>224.0.0.5–运行OSPF协议的路由器。</li><li>224.0.0.6–OSPF指定&#x2F;备用指定路由器DR&#x2F;BDR。</li><li>目标地址224.0.0.5指所有路由器，用于发现建立邻居、还用于选出区域内的指定路由器DR和备份指定路由器BDR（DR&#x2F;BDR组播地址是224.0.0.6）。</li></ul></li></ul><h1 id="Ⅲ-BGP"><a href="#Ⅲ-BGP" class="headerlink" title="Ⅲ - BGP"></a>Ⅲ - BGP</h1><h2 id="1-BGP基础"><a href="#1-BGP基础" class="headerlink" title="1.BGP基础"></a>1.BGP基础</h2><ul><li>BGP（Border Gateway Protocol，边界网关协议）外部网关协议，用于不同自治系统AS之间，寻找最佳路由。</li><li>通过TCP 179端口建立连接，支持VLSM和CIDR，是一种路径矢量协议，目前最新版本是BGP4，BGP4+支持IPv6。</li><li>Open建立邻居关系，Keepalive周期性探测邻居存活，每一个自治系统要选择至少一个路由器作为该自治系统的“BGP发言人”，支持增量更新，支持认证。可靠传输，防止环路。自治通信，策略选路。支持无类、支持聚合。</li></ul><h2 id="2-BGP四个报文"><a href="#2-BGP四个报文" class="headerlink" title="2.BGP四个报文"></a>2.BGP四个报文</h2><table><thead><tr><th align="center">报文类型</th><th align="center">功能描述</th></tr></thead><tbody><tr><td align="center">打开（Open）</td><td align="center">建立邻居关系</td></tr><tr><td align="center">更新（Update）</td><td align="center">发送新的路由信息</td></tr><tr><td align="center">保持活动状态（Keep alive）</td><td align="center">周期性确认邻居关系</td></tr><tr><td align="center">通告（Notification）</td><td align="center">报告检测到的错误</td></tr></tbody></table>]]></content>
-      
-      
-      <categories>
-          
-          <category> 网络规划设计师 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 网络规划设计师 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>制作银河麒麟V10启动盘</title>
-      <link href="/posts/96adbbf.html"/>
-      <url>/posts/96adbbf.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="1-注意事项"><a href="#1-注意事项" class="headerlink" title="1.注意事项"></a>1.注意事项</h2><ul><li><p>银河麒麟v10系统支持目前所有主流CPU架构，获取镜像的时候请一定要注意镜像版本与支持的CPU匹配情况，以免导致制作完成启动盘而无法正常安装的问题。</p></li><li><p>X86_64版镜像支持常见的intel、AMD、国产兆芯、国产海光等64位桌面及服务器处理器。</p></li><li><p>MIPS64e版镜像支持中科龙芯Longson3A3000、3A4000桌面处理器以及龙芯Longson3B3000、3B4000 服务器处理器。</p></li><li><p>Arm64版镜像支持华为鲲鹏920s、飞腾 2000&#x2F;4的桌面处理器，以及华为鲲鹏916、920、 飞腾2000&#x2F;64等服务器处理器。</p></li></ul><h2 id="2-准备工作"><a href="#2-准备工作" class="headerlink" title="2.准备工作"></a>2.准备工作</h2><ul><li>准备一个大小 &gt;&#x3D; 8G 的U盘。</li><li>下载<a href="http://www.dnxtc.net/software/xtgj/2017-11-13/7032.html">UltraISO</a>软碟通。</li><li>下载与CPU相匹配的银河麒麟操作系统镜像，下载地址：<a href="https://www.kylinos.cn/support/trial.html?pid=2">【单击跳转】</a></li></ul><h2 id="3-制作启动U盘"><a href="#3-制作启动U盘" class="headerlink" title="3.制作启动U盘"></a>3.制作启动U盘</h2><ul><li><p>插入U盘打开UltraISO（如果提示需要注册，输入注册码 -&gt; 注册名：王涛 -&gt; 注册码：7C81-1689-4046-626F）。</p></li><li><p>按 <code>ctrl + O</code> 选择已经下载好的系统镜像。</p><p><img src="/../images/%E5%88%B6%E4%BD%9C%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E5%90%AF%E5%8A%A8U%E7%9B%98/%E9%80%89%E6%8B%A9%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F%EF%BC%881%EF%BC%89.png" alt="选择系统镜像（1）"></p><p><img src="/../images/%E5%88%B6%E4%BD%9C%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E5%90%AF%E5%8A%A8U%E7%9B%98/%E9%80%89%E6%8B%A9%E7%B3%BB%E7%BB%9F%E9%95%9C%E5%83%8F%EF%BC%882%EF%BC%89.png" alt="选择系统镜像（2）"></p></li><li><p>点击启动，再点击写入硬盘映像。</p></li></ul><p><img src="/../images/%E5%88%B6%E4%BD%9C%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E5%90%AF%E5%8A%A8U%E7%9B%98/%E5%87%86%E5%A4%87%E5%86%99%E5%85%A5%E9%95%9C%E5%83%8F.png" alt="准备写入镜像"></p><ul><li>选择自己的U盘，然后点击写入。</li></ul><p><img src="/../images/%E5%88%B6%E4%BD%9C%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E5%90%AF%E5%8A%A8U%E7%9B%98/%E5%86%99%E5%85%A5%E9%95%9C%E5%83%8F.png" alt="写入镜像"></p><ul><li><p>写入开始前确认U盘内无重要文件，然后点击“是”。</p><p><img src="/../images/%E5%88%B6%E4%BD%9C%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E5%90%AF%E5%8A%A8U%E7%9B%98/%E8%AD%A6%E5%91%8A%EF%BC%81%E6%B3%A8%E6%84%8F%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6%EF%BC%81.png" alt="警告！注意备份文件！"></p></li><li><p>等待写入完成。</p><p><img src="/../images/%E5%88%B6%E4%BD%9C%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E5%90%AF%E5%8A%A8U%E7%9B%98/%E7%AD%89%E5%BE%85%E5%86%99%E5%85%A5%E5%AE%8C%E6%88%90%C2%B7%C2%B7%C2%B7%C2%B7%C2%B7%C2%B7.png" alt="等待写入完成······"></p></li><li><p>刻录成功。</p><p><img src="/../images/%E5%88%B6%E4%BD%9C%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E5%90%AF%E5%8A%A8U%E7%9B%98/%E5%88%BB%E5%BD%95%E6%88%90%E5%8A%9F.png" alt="刻录成功"></p></li></ul>]]></content>
-      
-      
-      <categories>
-          
-          <category> Linux </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 银河麒麟V10 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>银河麒麟V10修改密码</title>
-      <link href="/posts/7fcc22e9.html"/>
-      <url>/posts/7fcc22e9.html</url>
-      
-        <content type="html"><![CDATA[<h2 id="1-进入高级选项"><a href="#1-进入高级选项" class="headerlink" title="1.进入高级选项"></a>1.进入高级选项</h2><ul><li><p>开机时按 <code>↓</code> 选择Advanced options for Kylin V10（银河麒麟V10高级选项），然后回车进入。</p><p><img src="/../images/%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81/%E8%BF%9B%E5%85%A5%E9%AB%98%E7%BA%A7%E6%A8%A1%E5%BC%8F.png" alt="进入高级模式"></p></li></ul><h2 id="2-进入恢复模式编辑引导"><a href="#2-进入恢复模式编辑引导" class="headerlink" title="2.进入恢复模式编辑引导"></a>2.进入恢复模式编辑引导</h2><ul><li>按 <code>↓</code> 选择<code>Kylin V10 ··· ··· （recovery mod）（恢复模式）</code>，按下 <code>E</code> 键。</li></ul><p><img src="/../images/%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81/%E9%80%89%E6%8B%A9%E6%81%A2%E5%A4%8D%E6%A8%A1%E5%BC%8F%E6%8C%89%E4%B8%8BE%E9%94%AE.png" alt="选择恢复模式按下E键"></p><ul><li><p>在 <code>linux /image ··· ··· gle nomodeset console=tty1 security= </code> 将光标置于 <code>security=</code> 之后（注意：此处<code>=</code>之后有一个空格，移动光标时可以在下一行的<code>echo</code>前侧按一下 <code>←</code> 退到 <code>security=</code> 位置）。</p></li><li><p>输入 <code>rw init=/bin/bash</code> 并按F10保存并执行。</p><p><img src="/../images/%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81/%E7%BC%96%E8%BE%91%E5%BC%95%E5%AF%BC%EF%BC%881%EF%BC%89.png" alt="编辑引导（1）"></p><p><img src="/../images/%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81/%E7%BC%96%E8%BE%91%E5%BC%95%E5%AF%BC%EF%BC%882%EF%BC%89.png" alt="编辑引导（2）"></p><p><img src="/../images/%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81/%E7%BC%96%E8%BE%91%E5%BC%95%E5%AF%BC%EF%BC%883%EF%BC%89.png" alt="编辑引导（3）"></p></li></ul><h2 id="3-修改密码"><a href="#3-修改密码" class="headerlink" title="3.修改密码"></a>3.修改密码</h2><ul><li>输入 <code>passwd [用户名]</code> 回车。</li><li>输入新密码 -&gt; 回车 -&gt; 确认新密码 -&gt; 回车，提示 <code>password updated succesfully</code> 表示密码修改成功（注意：Linux系统的密码输入均为密文输入，输入时不会在屏幕上显示，输入完回车即可）。</li></ul><p><img src="/../images/%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81/%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%EF%BC%881%EF%BC%89.png" alt="修改密码（1）"></p><p><img src="/../images/%E9%93%B6%E6%B2%B3%E9%BA%92%E9%BA%9FV10%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81/%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%EF%BC%882%EF%BC%89.png" alt="修改密码（2）"></p><ul><li>输入 <code>/sbin/reboot -f</code> 重启系统完成密码修改，输入新密码登陆系统。</li></ul><h2 id="4-外链"><a href="#4-外链" class="headerlink" title="4.外链"></a>4.外链</h2><ul><li><p>原文链接：<a href="https://blog.csdn.net/LH643/article/details/125150595">【单击跳转】</a></p></li><li><p>麒麟软件官网修改密码步骤：<a href="http://eco.kylinos.cn/document/question/xi-tong-shi-yong/28.html">【单击跳转】</a></p></li></ul>]]></content>
-      
-      
-      <categories>
-          
-          <category> Linux </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> 银河麒麟V10 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>7.IP路由基础</title>
       <link href="/posts/e175ee3c.html"/>
       <url>/posts/e175ee3c.html</url>
@@ -429,31 +329,6 @@
     
     
     <entry>
-      <title>在PowerShell中使用title命令</title>
-      <link href="/posts/57899.html"/>
-      <url>/posts/57899.html</url>
-      
-        <content type="html"><![CDATA[<h4 id="在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令"><a href="#在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令" class="headerlink" title="在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令"></a>在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$host</span>.ui.RawUI.WindowTitle=<span class="string">&quot;自定义标题&quot;</span></span><br></pre></td></tr></table></figure><h4 id="使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用"><a href="#使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用" class="headerlink" title="使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用"></a>使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">test-path</span> <span class="variable">$profile</span></span><br></pre></td></tr></table></figure><h4 id="如果返回值为false则执行如下命令"><a href="#如果返回值为false则执行如下命令" class="headerlink" title="如果返回值为false则执行如下命令"></a>如果返回值为false则执行如下命令</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">New-Item</span> <span class="literal">-path</span> <span class="variable">$profile</span> <span class="literal">-type</span> file <span class="literal">-force</span></span><br></pre></td></tr></table></figure><h4 id="如果返回值为true则执行如下命令"><a href="#如果返回值为true则执行如下命令" class="headerlink" title="如果返回值为true则执行如下命令"></a>如果返回值为true则执行如下命令</h4><p>注：在执行此命令前需要电脑内安装了Visual Studio Code</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code <span class="variable">$profile</span> </span><br></pre></td></tr></table></figure><h4 id="运行完之后会打开一个profile文件，在该文件内输入以下代码"><a href="#运行完之后会打开一个profile文件，在该文件内输入以下代码" class="headerlink" title="运行完之后会打开一个profile文件，在该文件内输入以下代码"></a>运行完之后会打开一个profile文件，在该文件内输入以下代码</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Set-WindowTitle</span></span> &#123;</span><br><span class="line">    <span class="variable">$host</span>.UI.RawUI.WindowTitle = [<span class="built_in">string</span>]::Join(<span class="string">&quot; &quot;</span>, <span class="variable">$args</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Set-Alias</span> <span class="literal">-name</span> <span class="string">&quot;title&quot;</span> <span class="literal">-value</span> <span class="built_in">Set-WindowTitle</span></span><br></pre></td></tr></table></figure><h4 id="重启Powershell可以发现我们在PowerShell内可以使用title命令改更改窗口标题了"><a href="#重启Powershell可以发现我们在PowerShell内可以使用title命令改更改窗口标题了" class="headerlink" title="重启Powershell可以发现我们在PowerShell内可以使用title命令改更改窗口标题了"></a>重启Powershell可以发现我们在PowerShell内可以使用title命令改更改窗口标题了</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title A Minecraft Server</span><br></pre></td></tr></table></figure>]]></content>
-      
-      
-      <categories>
-          
-          <category> 网络工程（杂项） </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> PowerShell </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>Pure README</title>
       <link href="/posts/47848.html"/>
       <url>/posts/47848.html</url>
@@ -479,23 +354,23 @@
     
     
     <entry>
-      <title>捕光捉影</title>
-      <link href="/posts/6a608fc0.html"/>
-      <url>/posts/6a608fc0.html</url>
+      <title>在PowerShell中使用title命令</title>
+      <link href="/posts/57899.html"/>
+      <url>/posts/57899.html</url>
       
-        <content type="html"><![CDATA[<h2 id="1-布衣乐队现场"><a href="#1-布衣乐队现场" class="headerlink" title="1.布衣乐队现场"></a>1.布衣乐队现场</h2><p><img src="/../images/%E7%9B%B8%E5%86%8C/%E5%B8%83%E8%A1%A3%E4%B9%90%E9%98%9F%E7%8E%B0%E5%9C%BA.jpg" alt="布衣乐队现场"></p><h2 id="2-孤峰塔"><a href="#2-孤峰塔" class="headerlink" title="2.孤峰塔"></a>2.孤峰塔</h2><p><img src="/../images/%E7%9B%B8%E5%86%8C/%E5%AD%A4%E5%B3%B0%E5%A1%94.jpg" alt="孤峰塔"></p><h2 id="3-一血"><a href="#3-一血" class="headerlink" title="3.一血"></a>3.一血</h2><p><img src="/../images/%E7%9B%B8%E5%86%8C/%E4%B8%80%E8%A1%80.jpg" alt="一血"></p>]]></content>
+        <content type="html"><![CDATA[<h4 id="在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令"><a href="#在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令" class="headerlink" title="在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令"></a>在Powershell中无法像在cmd内一样愉快的使用title命令来更改标题而是使用如下命令</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$host</span>.ui.RawUI.WindowTitle=<span class="string">&quot;自定义标题&quot;</span></span><br></pre></td></tr></table></figure><h4 id="使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用"><a href="#使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用" class="headerlink" title="使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用"></a>使用这条命令来更改属实是有点麻烦，很难记，所以我们使用alias来让title命令可以在Powershell内使用</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">test-path</span> <span class="variable">$profile</span></span><br></pre></td></tr></table></figure><h4 id="如果返回值为false则执行如下命令"><a href="#如果返回值为false则执行如下命令" class="headerlink" title="如果返回值为false则执行如下命令"></a>如果返回值为false则执行如下命令</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">New-Item</span> <span class="literal">-path</span> <span class="variable">$profile</span> <span class="literal">-type</span> file <span class="literal">-force</span></span><br></pre></td></tr></table></figure><h4 id="如果返回值为true则执行如下命令"><a href="#如果返回值为true则执行如下命令" class="headerlink" title="如果返回值为true则执行如下命令"></a>如果返回值为true则执行如下命令</h4><p>注：在执行此命令前需要电脑内安装了Visual Studio Code</p><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code <span class="variable">$profile</span> </span><br></pre></td></tr></table></figure><h4 id="运行完之后会打开一个profile文件，在该文件内输入以下代码"><a href="#运行完之后会打开一个profile文件，在该文件内输入以下代码" class="headerlink" title="运行完之后会打开一个profile文件，在该文件内输入以下代码"></a>运行完之后会打开一个profile文件，在该文件内输入以下代码</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Set-WindowTitle</span></span> &#123;</span><br><span class="line">    <span class="variable">$host</span>.UI.RawUI.WindowTitle = [<span class="built_in">string</span>]::Join(<span class="string">&quot; &quot;</span>, <span class="variable">$args</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">Set-Alias</span> <span class="literal">-name</span> <span class="string">&quot;title&quot;</span> <span class="literal">-value</span> <span class="built_in">Set-WindowTitle</span></span><br></pre></td></tr></table></figure><h4 id="重启Powershell可以发现我们在PowerShell内可以使用title命令改更改窗口标题了"><a href="#重启Powershell可以发现我们在PowerShell内可以使用title命令改更改窗口标题了" class="headerlink" title="重启Powershell可以发现我们在PowerShell内可以使用title命令改更改窗口标题了"></a>重启Powershell可以发现我们在PowerShell内可以使用title命令改更改窗口标题了</h4><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title A Minecraft Server</span><br></pre></td></tr></table></figure>]]></content>
       
       
       <categories>
           
-          <category> 捕光捉影 </category>
+          <category> 网络工程（杂项） </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> 捕光捉影 </tag>
+            <tag> PowerShell </tag>
             
         </tags>
       
