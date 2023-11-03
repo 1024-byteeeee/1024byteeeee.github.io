@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"1024byteeeee.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Ⅰ - RIP1.RIP协议 RIP(Routing Information Protocol,路由信息协议）：距离矢量路由协议 计算跳数：最大15跳，16跳不可达，一般用于小型网络。 30s周期性更新路由表、180s无更新表示不存在、240s删除路由表。 支持等价负载均衡和链路冗余，使用UDP的520端口。  2.RIPv1与RIPv2对比   RIPv1 RIPv2    有类，不携带子网掩码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="8.动态路由协议">
+<meta property="og:url" content="https://1024byteeeee.top/posts/18116d90.html">
+<meta property="og:site_name" content="壹零贰肆">
+<meta property="og:description" content="Ⅰ - RIP1.RIP协议 RIP(Routing Information Protocol,路由信息协议）：距离矢量路由协议 计算跳数：最大15跳，16跳不可达，一般用于小型网络。 30s周期性更新路由表、180s无更新表示不存在、240s删除路由表。 支持等价负载均衡和链路冗余，使用UDP的520端口。  2.RIPv1与RIPv2对比   RIPv1 RIPv2    有类，不携带子网掩码">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://1024byteeeee.top/images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/OSPF%E5%8C%BA%E5%9F%9F.png">
+<meta property="og:image" content="https://1024byteeeee.top/images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/OSPF%E8%B7%AF%E7%94%B1%E5%99%A8%E8%A7%92%E8%89%B2.png">
+<meta property="article:published_time" content="2023-05-29T09:21:15.000Z">
+<meta property="article:modified_time" content="2023-11-03T09:39:05.561Z">
+<meta property="article:author" content="1024_byteeeee">
+<meta property="article:tag" content="网络规划设计师">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://1024byteeeee.top/images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/OSPF%E5%8C%BA%E5%9F%9F.png">
+
+
+<link rel="canonical" href="https://1024byteeeee.top/posts/18116d90.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://1024byteeeee.top/posts/18116d90.html","path":"posts/18116d90.html","title":"8.动态路由协议"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>8.动态路由协议 | 壹零贰肆</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- 背景动画 -->
+  <script type="text/javascript" color="0,0,0" opacity='0.8' zIndex="-2" count="168" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  <!-- 
+  color: 线条颜色，默认：‘0，0，0’；三个数字分别为(R,G,B),注意使用，分割
+  opacity: 线条透明度0~1,默认0.5
+  count: 线条总数量，默认150
+  zIndex: 背景的z-Index属性，css用于控制所在层的位置，默认-1 
+  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script><!--需要JQuery的支持-->
+  <script type="text/javascript" src ="/js/clicker.js" ></script>
+
+  <div class="headband"></div>
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">壹零贰肆</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生命的遗产是对知识的更新</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%85%A0-RIP"><span class="nav-text">Ⅰ - RIP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-RIP%E5%8D%8F%E8%AE%AE"><span class="nav-text">1.RIP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-RIPv1%E4%B8%8ERIPv2%E5%AF%B9%E6%AF%94"><span class="nav-text">2.RIPv1与RIPv2对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%B7%9D%E7%A6%BB%E7%9F%A2%E9%87%8F%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE"><span class="nav-text">3.距离矢量路由协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E8%B7%9D%E7%A6%BB%E7%9F%A2%E9%87%8F%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9%E5%8D%8F%E8%AE%AE%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-text">4.距离矢量路由选择协议的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-RIP%E8%B7%AF%E7%94%B1%E7%9A%84%E5%BA%A6%E9%87%8F%E5%80%BC"><span class="nav-text">5.RIP路由的度量值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E8%B7%AF%E7%94%B1%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-text">6.路由优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-RIP%E9%98%B2%E7%8E%AF%E6%9C%BA%E5%88%B6"><span class="nav-text">7.RIP防环机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-RIP%E5%8D%8F%E8%AE%AE%E6%80%BB%E7%BB%93"><span class="nav-text">8.RIP协议总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%85%A1-OSPF"><span class="nav-text">Ⅱ - OSPF</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-OSPF%E7%AE%80%E4%BB%8B"><span class="nav-text">1.OSPF简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-OSPF%E5%9F%BA%E6%9C%AC%E7%89%B9%E7%82%B9"><span class="nav-text">2.OSPF基本特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Router-ID"><span class="nav-text">3.Router ID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-OSPF-Cost"><span class="nav-text">4.OSPF Cost</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-OSPF%E5%8C%BA%E5%9F%9F"><span class="nav-text">5.OSPF区域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-OSPF%E8%B7%AF%E7%94%B1%E5%99%A8%E8%A7%92%E8%89%B2"><span class="nav-text">6.OSPF路由器角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-OSPF%E6%80%BB%E7%BB%93"><span class="nav-text">7.OSPF总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%85%A2-BGP"><span class="nav-text">Ⅲ - BGP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-BGP%E5%9F%BA%E7%A1%80"><span class="nav-text">1.BGP基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-BGP%E5%9B%9B%E4%B8%AA%E6%8A%A5%E6%96%87"><span class="nav-text">2.BGP四个报文</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="1024_byteeeee"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">1024_byteeeee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/1024-byteeeee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;1024-byteeeee" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+      
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://1024byteeeee.top/posts/18116d90.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="1024_byteeeee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="壹零贰肆">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="8.动态路由协议 | 壹零贰肆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          8.动态路由协议
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-05-29 17:21:15" itemprop="dateCreated datePublished" datetime="2023-05-29T17:21:15+08:00">2023-05-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-03 17:39:05" itemprop="dateModified" datetime="2023-11-03T17:39:05+08:00">2023-11-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88/" itemprop="url" rel="index"><span itemprop="name">网络规划设计师</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Ⅰ-RIP"><a href="#Ⅰ-RIP" class="headerlink" title="Ⅰ - RIP"></a>Ⅰ - RIP</h1><h2 id="1-RIP协议"><a href="#1-RIP协议" class="headerlink" title="1.RIP协议"></a>1.RIP协议</h2><ul>
+<li>RIP(Routing Information Protocol,路由信息协议）：距离矢量路由协议</li>
+<li>计算跳数：最大15跳，16跳不可达，一般用于小型网络。</li>
+<li>30s周期性更新路由表、180s无更新表示不存在、240s删除路由表。</li>
+<li>支持等价负载均衡和链路冗余，使用UDP的520端口。</li>
+</ul>
+<h2 id="2-RIPv1与RIPv2对比"><a href="#2-RIPv1与RIPv2对比" class="headerlink" title="2.RIPv1与RIPv2对比"></a>2.RIPv1与RIPv2对比</h2><table>
+<thead>
+<tr>
+<th align="center">RIPv1</th>
+<th align="center">RIPv2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">有类，不携带子网掩码</td>
+<td align="center">无类，携带子网掩码</td>
+</tr>
+<tr>
+<td align="center">广播更新</td>
+<td align="center">组播更新（224.0.0.9）</td>
+</tr>
+<tr>
+<td align="center">周期性更新（30s）</td>
+<td align="center">触发更新</td>
+</tr>
+<tr>
+<td align="center">不支持VLSM、CIDR</td>
+<td align="center">支持VLSM、DIDR</td>
+</tr>
+<tr>
+<td align="center">不提供认证</td>
+<td align="center">提供明文和MD5认证</td>
+</tr>
+</tbody></table>
+<h2 id="3-距离矢量路由协议"><a href="#3-距离矢量路由协议" class="headerlink" title="3.距离矢量路由协议"></a>3.距离矢量路由协议</h2><ul>
+<li>使用距离矢量路由协议的路由器并<strong>不了解网络的拓扑</strong>，该路由器只知道：<ul>
+<li>自身与目的网络之间的距离。</li>
+<li>应该往哪个方向或哪个接口转发数据包。</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-距离矢量路由选择协议的特点"><a href="#4-距离矢量路由选择协议的特点" class="headerlink" title="4.距离矢量路由选择协议的特点"></a>4.距离矢量路由选择协议的特点</h2><ul>
+<li>周期性地<strong>（广播）整张路由表</strong>。</li>
+</ul>
+<h2 id="5-RIP路由的度量值"><a href="#5-RIP路由的度量值" class="headerlink" title="5.RIP路由的度量值"></a>5.RIP路由的度量值</h2><ul>
+<li>RIP以<strong>跳数</strong>作为度量值，虽然简单，但事实上不科学，例如现在有两条路可选，它会选择经过路由器少的那条路，而不是带宽更大的那条路。</li>
+</ul>
+<h2 id="6-路由优先级"><a href="#6-路由优先级" class="headerlink" title="6.路由优先级"></a>6.路由优先级</h2><table>
+<thead>
+<tr>
+<th align="center">路由协议或种类</th>
+<th align="center">相应路由的优先级</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">DIRECT</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">OSPF</td>
+<td align="center">10</td>
+</tr>
+<tr>
+<td align="center">IS-IS</td>
+<td align="center">15</td>
+</tr>
+<tr>
+<td align="center">STATIC</td>
+<td align="center">60</td>
+</tr>
+<tr>
+<td align="center">RIP</td>
+<td align="center">100</td>
+</tr>
+<tr>
+<td align="center">OSPF AS E</td>
+<td align="center">150</td>
+</tr>
+<tr>
+<td align="center">OSPF NSSA</td>
+<td align="center">150</td>
+</tr>
+<tr>
+<td align="center">IBGP</td>
+<td align="center">255</td>
+</tr>
+<tr>
+<td align="center">EBGP</td>
+<td align="center">255</td>
+</tr>
+</tbody></table>
+<h2 id="7-RIP防环机制"><a href="#7-RIP防环机制" class="headerlink" title="7.RIP防环机制"></a>7.RIP防环机制</h2><ul>
+<li><p>最大跳数：</p>
+<p>当一个路由条目发送出去跳数自动加1，最大为16跳，16跳时不可达。</p>
+</li>
+<li><p>水平分割：</p>
+<p>一条路由信息不会发送给信息的来源。</p>
+</li>
+<li><p>反向毒化：</p>
+<p>把邻居学习到的路由信息设置为16跳，再发送给那个邻居。</p>
+</li>
+<li><p>抑制定时器和触发更新也可以防止环路。</p>
+</li>
+</ul>
+<h2 id="8-RIP协议总结"><a href="#8-RIP协议总结" class="headerlink" title="8.RIP协议总结"></a>8.RIP协议总结</h2><ul>
+<li>RIP（Routing Information Protocols，路由信息协议）。</li>
+<li>应用较早、使用较为普遍的<strong>内部网关协议</strong>。</li>
+<li>适用于小型网络，是典型的距离矢量路由协议。</li>
+<li>使用UDP 520端口。</li>
+</ul>
+<h1 id="Ⅱ-OSPF"><a href="#Ⅱ-OSPF" class="headerlink" title="Ⅱ - OSPF"></a>Ⅱ - OSPF</h1><h2 id="1-OSPF简介"><a href="#1-OSPF简介" class="headerlink" title="1.OSPF简介"></a>1.OSPF简介</h2><ul>
+<li>Open Shortest Path First，开放式最短路径优先协议。</li>
+<li>OSPF是一种链路状态路由协议。</li>
+<li>Open意味着公有，任何设备厂商都能够支持OSPF，是目前业内使用最广泛的IGP。</li>
+<li>路由器之间<strong>交互的是链路状态信息</strong>，而不是直接交换路由。</li>
+<li>每台OSPF路由器都知晓网络拓扑结构，采用<strong>SPF算法</strong>计算到达目的地的最短路径。</li>
+<li>支持VLSM，支持手工路由汇总。</li>
+</ul>
+<h2 id="2-OSPF基本特点"><a href="#2-OSPF基本特点" class="headerlink" title="2.OSPF基本特点"></a>2.OSPF基本特点</h2><ul>
+<li><p>适应范围广：</p>
+<p>支持各种规模的网络。</p>
+</li>
+<li><p>快速收敛：</p>
+<p>在网络的拓扑结构发生变化后立即发送更新报文，使这一变化在自治系统中同步。</p>
+</li>
+<li><p>无自环：</p>
+<p>使用SPF最短路径树算法进行路由计算，不会产生环路。</p>
+</li>
+<li><p>区域划分：</p>
+<p>允许网络被划分成区域来管理，链路状态数据库仅需和区域内其他路由器保持一致。减小对路由器内存和CPU的消耗。同时区域间传送的路由信息减小，降低网络带宽占用。</p>
+</li>
+</ul>
+<h2 id="3-Router-ID"><a href="#3-Router-ID" class="headerlink" title="3.Router ID"></a>3.Router ID</h2><ul>
+<li><p>Router Identifier，路由器标示符，用于在一个OSPF域中唯一地标识一台路由器，每台运行OSPF的路由器具备Router-ID。</p>
+</li>
+<li><p>相同OSPF区域内，禁止出现两台路由器的Router ID相同。</p>
+</li>
+<li><p>OSPF Router-ID可以通过手工配置的方式，或使用自动获取的方式。自动选取的机制是：若路由器存在loopback接口，则选最大的loopback接口IP地址，若无则选活跃的物理接口中IP地址最大的作RouterID（实际项目手工配置）。</p>
+</li>
+<li><p>Router-ID值遵循稳定第一的原则，不会抢占。如果需要更新RouterID：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">undo ip address		//重配进程</span><br><span class="line">reset ospf process		//重启进程</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="4-OSPF-Cost"><a href="#4-OSPF-Cost" class="headerlink" title="4.OSPF Cost"></a>4.OSPF Cost</h2><ul>
+<li>OSPF使用Cost“开销”作为路由度量值。</li>
+<li>OSPF接口cost&#x3D;100M&#x2F;接口带宽，其中100M为OSPF参考带宽，可以被修改。</li>
+<li>每一个激活OSPF的接口都有一个cost值。</li>
+<li>一条OSPF路由的cost值由该路由从起源一路到达本地的所有<strong>入接口cost值的总和</strong>。</li>
+</ul>
+<h2 id="5-OSPF区域"><a href="#5-OSPF区域" class="headerlink" title="5.OSPF区域"></a>5.OSPF区域</h2><ul>
+<li><p>所有非骨干区域必须与骨干区域直连。</p>
+<p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/OSPF%E5%8C%BA%E5%9F%9F.png" alt="OSPF区域"></p>
+</li>
+</ul>
+<h2 id="6-OSPF路由器角色"><a href="#6-OSPF路由器角色" class="headerlink" title="6.OSPF路由器角色"></a>6.OSPF路由器角色</h2><ul>
+<li><p>区域内路由器（IR，Internal Router）：</p>
+<p>在区域内部的路由器。</p>
+</li>
+<li><p>区域边界路由器（ABR，Area Border Router）：</p>
+<p>在区域与区域之间的路由器。</p>
+</li>
+<li><p>骨干路由器（BR，Backbone Router）：</p>
+<p>位于area 0内的路由器。</p>
+</li>
+<li><p>AS边界路由器（AS Boundary Router）：</p>
+<p>位于AS边界（与其他路由协议相邻接位置）的路由器。</p>
+</li>
+</ul>
+<p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/OSPF%E8%B7%AF%E7%94%B1%E5%99%A8%E8%A7%92%E8%89%B2.png" alt="OSPF路由器角色"></p>
+<h2 id="7-OSPF总结"><a href="#7-OSPF总结" class="headerlink" title="7.OSPF总结"></a>7.OSPF总结</h2><ul>
+<li>OSPF(Open Shortest Path First，开放式最短路径优先协议）内部网关协议，链路状态路由协议，通过连通性、距离、时延、带宽等状态计算最佳路径，采用Dijkstra算法（也叫SPF算法）。</li>
+<li>触发式更新、分层路由，支持大型网络。</li>
+<li>Area 0.0.0.0或者Area 0来表示，不是区域1。</li>
+<li>点对点网络上每10秒发送一次hello，在NBMA网络每30秒发送一次，Deadtime为hello时间4倍。</li>
+<li>OSPF系统内几个特殊组播地址：<ul>
+<li>224.0.0.1–在本地子网的所有主机。</li>
+<li>224.0.0.2–在本地子网的所有路由器。</li>
+<li>224.0.0.5–运行OSPF协议的路由器。</li>
+<li>224.0.0.6–OSPF指定&#x2F;备用指定路由器DR&#x2F;BDR。</li>
+<li>目标地址224.0.0.5指所有路由器，用于发现建立邻居、还用于选出区域内的指定路由器DR和备份指定路由器BDR（DR&#x2F;BDR组播地址是224.0.0.6）。</li>
+</ul>
+</li>
+</ul>
+<h1 id="Ⅲ-BGP"><a href="#Ⅲ-BGP" class="headerlink" title="Ⅲ - BGP"></a>Ⅲ - BGP</h1><h2 id="1-BGP基础"><a href="#1-BGP基础" class="headerlink" title="1.BGP基础"></a>1.BGP基础</h2><ul>
+<li>BGP（Border Gateway Protocol，边界网关协议）外部网关协议，用于不同自治系统AS之间，寻找最佳路由。</li>
+<li>通过TCP 179端口建立连接，支持VLSM和CIDR，是一种路径矢量协议，目前最新版本是BGP4，BGP4+支持IPv6。</li>
+<li>Open建立邻居关系，Keepalive周期性探测邻居存活，每一个自治系统要选择至少一个路由器作为该自治系统的“BGP发言人”，支持增量更新，支持认证。可靠传输，防止环路。自治通信，策略选路。支持无类、支持聚合。</li>
+</ul>
+<h2 id="2-BGP四个报文"><a href="#2-BGP四个报文" class="headerlink" title="2.BGP四个报文"></a>2.BGP四个报文</h2><table>
+<thead>
+<tr>
+<th align="center">报文类型</th>
+<th align="center">功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">打开（Open）</td>
+<td align="center">建立邻居关系</td>
+</tr>
+<tr>
+<td align="center">更新（Update）</td>
+<td align="center">发送新的路由信息</td>
+</tr>
+<tr>
+<td align="center">保持活动状态（Keep alive）</td>
+<td align="center">周期性确认邻居关系</td>
+</tr>
+<tr>
+<td align="center">通告（Notification）</td>
+<td align="center">报告检测到的错误</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>1024_byteeeee
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://1024byteeeee.top/posts/18116d90.html" title="8.动态路由协议">https://1024byteeeee.top/posts/18116d90.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88/" rel="tag"># 网络规划设计师</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/96adbbf.html" rel="prev" title="制作银河麒麟V10启动盘">
+                  <i class="fa fa-chevron-left"></i> 制作银河麒麟V10启动盘
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/17d3165a.html" rel="next" title="9.网络管理与QoS">
+                  9.网络管理与QoS <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2022 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-cubes"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">1024_byteeeee</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">26k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:33</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<div>
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("10/31/2022 10:24:00");//在此处修改你的建站时间
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/1024-byteeeee" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/jquery@3.6.4/dist/jquery.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script src="https://unpkg.com/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: 'unset',
+  left: '32px',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '💡',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+</body>
+</html>
