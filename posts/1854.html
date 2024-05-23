@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="manifest" href="/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://unpkg.com/pace-js@1.2.4/themes/black/pace-theme-minimal.css">
+  <script src="https://unpkg.com/pace-js@1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"1024byteeeee.top","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.16.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Ⅰ - 通信指标1.通信基础概念 通信的实质就是实现信息的有效传递，它不仅要将有用的信息进行无失真、高效率的传输，而且还要在传输的过程中减少或消除无用信息和有害信息。  数据和信号： 数据是运送信息的实体，而信号则是数据的电器的或电磁的表现。无论数据或信号，既可以是模拟的也可以是数字的。所谓“模拟的”就是连续变化的，而“数字的”就表示取值仅允许为有限的几个离散数值。  信道： 信道一般用来表示向某">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3.数据通信基础">
+<meta property="og:url" content="https://1024byteeeee.top/posts/1854.html">
+<meta property="og:site_name" content="壹零贰肆">
+<meta property="og:description" content="Ⅰ - 通信指标1.通信基础概念 通信的实质就是实现信息的有效传递，它不仅要将有用的信息进行无失真、高效率的传输，而且还要在传输的过程中减少或消除无用信息和有害信息。  数据和信号： 数据是运送信息的实体，而信号则是数据的电器的或电磁的表现。无论数据或信号，既可以是模拟的也可以是数字的。所谓“模拟的”就是连续变化的，而“数字的”就表示取值仅允许为有限的几个离散数值。  信道： 信道一般用来表示向某">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://1024byteeeee.top/images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/NRZ-I.png">
+<meta property="og:image" content="https://1024byteeeee.top/images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/MLT-3.png">
+<meta property="og:image" content="https://1024byteeeee.top/images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/%E6%9B%BC%E5%BD%BB%E6%96%AF%E7%89%B9%E7%BC%96%E7%A0%81.png">
+<meta property="og:image" content="https://1024byteeeee.top/images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/%E5%B7%AE%E5%88%86%E6%9B%BC%E5%BD%BB%E6%96%AF%E7%89%B9%E7%BC%96%E7%A0%81.png">
+<meta property="og:image" content="https://1024byteeeee.top/images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/ASK.png">
+<meta property="og:image" content="https://1024byteeeee.top/images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/FSK.png">
+<meta property="og:image" content="https://1024byteeeee.top/images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/PSK.png">
+<meta property="og:image" content="https://1024byteeeee.top/images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/QAM.png">
+<meta property="og:image" content="https://1024byteeeee.top/images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/%E4%BB%A5%E5%A4%AA%E7%BD%91%E6%8A%A5%E6%96%87%E5%B0%81%E8%A3%85.png">
+<meta property="article:published_time" content="2023-05-06T06:40:23.000Z">
+<meta property="article:modified_time" content="2024-05-23T11:45:11.897Z">
+<meta property="article:author" content="1024_byteeeee">
+<meta property="article:tag" content="网络规划设计师">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://1024byteeeee.top/images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/NRZ-I.png">
+
+
+<link rel="canonical" href="https://1024byteeeee.top/posts/1854.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://1024byteeeee.top/posts/1854.html","path":"posts/1854.html","title":"3.数据通信基础"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>3.数据通信基础 | 壹零贰肆</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}.darkmode-ignore,img{display:flex!important}.beian img{display:inline-block!important}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <!-- 背景动画 -->
+  <script type="text/javascript" color="0,0,0" opacity='0.8' zIndex="-2" count="168" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+  <!-- 
+  color: 线条颜色，默认：‘0，0，0’；三个数字分别为(R,G,B),注意使用，分割
+  opacity: 线条透明度0~1,默认0.5
+  count: 线条总数量，默认150
+  zIndex: 背景的z-Index属性，css用于控制所在层的位置，默认-1 
+  -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script><!--需要JQuery的支持-->
+  <script type="text/javascript" src ="/js/clicker.js" ></script>
+
+  <div class="headband"></div>
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">壹零贰肆</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">生命的遗产是对知识的更新</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%85%A0-%E9%80%9A%E4%BF%A1%E6%8C%87%E6%A0%87"><span class="nav-text">Ⅰ - 通信指标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="nav-text">1.通信基础概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%93%E6%8C%87%E6%A0%87"><span class="nav-text">2.网络传输指标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%95%B0%E6%8D%AE%E6%8D%9F%E5%AE%B3"><span class="nav-text">3.数据损害</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%85%A1-%E6%95%B0%E6%8D%AE%E7%BC%96%E7%A0%81"><span class="nav-text">Ⅱ - 数据编码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%95%B0%E5%AD%97%E9%80%9A%E4%BF%A1%E7%B3%BB%E7%BB%9F"><span class="nav-text">1.数字通信系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%9D%9E%E5%BD%92%E9%9B%B6%E7%A0%81-NRZ-I"><span class="nav-text">2.非归零码 NRZ-I</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-MLT-3%E7%BC%96%E7%A0%81"><span class="nav-text">3.MLT-3编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%9B%BC%E5%BD%BB%E6%96%AF%E7%89%B9%E7%BC%96%E7%A0%81"><span class="nav-text">4.曼彻斯特编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%B7%AE%E5%88%86%E6%9B%BC%E5%88%87%E6%96%AF%E7%89%B9%E7%BC%96%E7%A0%81"><span class="nav-text">5.差分曼切斯特编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E4%B8%A4%E7%A7%8D%E6%9B%BC%E7%A0%81%E7%89%B9%E7%82%B9%E4%B8%8E%E7%BC%96%E7%A0%81%E6%95%88%E7%8E%87"><span class="nav-text">6.两种曼码特点与编码效率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%85%A2-%E8%B0%83%E5%88%B6%E6%8A%80%E6%9C%AF"><span class="nav-text">Ⅲ.调制技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%95%B0%E5%AD%97%E8%B0%83%E5%88%B6%E6%8A%80%E6%9C%AF"><span class="nav-text">1.数字调制技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%89%A9%E9%A2%91%E9%80%9A%E4%BF%A1"><span class="nav-text">2.扩频通信</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%85%A3-%E4%BF%A1%E9%81%93%E5%BB%B6%E8%BF%9F"><span class="nav-text">Ⅳ - 信道延迟</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BF%A1%E9%81%93%E5%BB%B6%E6%97%B6"><span class="nav-text">1.信道延时</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BB%A5%E5%A4%AA%E7%BD%91%E6%8A%A5%E6%96%87%E5%B0%81%E8%A3%85"><span class="nav-text">2.以太网报文封装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%85%A4-%E4%BA%A4%E6%8D%A2%E6%96%B9%E5%BC%8F"><span class="nav-text">Ⅴ - 交换方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%95%B0%E6%8D%AE%E4%BA%A4%E6%8D%A2%E5%88%86%E7%B1%BB"><span class="nav-text">1.数据交换分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BA%A4%E6%8D%A2%E6%96%B9%E5%BC%8F"><span class="nav-text">2.交换方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2%E6%8A%80%E6%9C%AF"><span class="nav-text">3.分组交换技术</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%85%A5-%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF"><span class="nav-text">Ⅵ - 复用技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF"><span class="nav-text">1.多路复用技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%A2%91%E5%88%86%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF"><span class="nav-text">2.频分复用技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%97%B6%E5%88%86%E5%A4%8D%E7%94%A8%E6%8A%80%E6%9C%AF"><span class="nav-text">3.时分复用技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%B3%A2%E5%88%86%E5%A4%8D%E7%94%A8"><span class="nav-text">4.波分复用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%BB%9F%E8%AE%A1%E6%97%B6%E5%88%86%E5%A4%8D%E7%94%A8"><span class="nav-text">5.统计时分复用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-E1-%E4%B8%8E-T1"><span class="nav-text">6.E1 与 T1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%90%8C%E6%AD%A5%E6%95%B0%E5%AD%97%E5%BA%8F%E5%88%97"><span class="nav-text">7.同步数字序列</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%85%A6-%E5%A5%87%E5%81%B6%E6%A0%A1%E9%AA%8C"><span class="nav-text">Ⅶ - 奇偶校验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%B7%AE%E9%94%99%E6%8E%A7%E5%88%B6"><span class="nav-text">1.差错控制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%85%A7-%E5%BE%AA%E7%8E%AF%E5%86%97%E4%BD%99%E6%A0%A1%E9%AA%8C%E7%A0%81CRC"><span class="nav-text">Ⅷ - 循环冗余校验码CRC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%85%A8-%E9%80%89%E6%8B%A9%E9%87%8D%E5%8F%91ARQ"><span class="nav-text">Ⅸ - 选择重发ARQ</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A3%80%E9%94%99%E9%87%8D%E5%8F%91ARQ"><span class="nav-text">1.检错重发ARQ</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="1024_byteeeee"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">1024_byteeeee</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/1024-byteeeee" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;1024-byteeeee" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="https://unpkg.com/@creativecommons/vocabulary@2020.11.3/assets/license_badges/big/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+        </div>
+      </div>
+      
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://1024byteeeee.top/posts/1854.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="1024_byteeeee">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="壹零贰肆">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="3.数据通信基础 | 壹零贰肆">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          3.数据通信基础
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-05-06 14:40:23" itemprop="dateCreated datePublished" datetime="2023-05-06T14:40:23+08:00">2023-05-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-05-23 19:45:11" itemprop="dateModified" datetime="2024-05-23T19:45:11+08:00">2024-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88/" itemprop="url" rel="index"><span itemprop="name">网络规划设计师</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>15 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Ⅰ-通信指标"><a href="#Ⅰ-通信指标" class="headerlink" title="Ⅰ - 通信指标"></a>Ⅰ - 通信指标</h1><h2 id="1-通信基础概念"><a href="#1-通信基础概念" class="headerlink" title="1.通信基础概念"></a>1.通信基础概念</h2><ul>
+<li><p>通信的实质就是实现信息的有效传递，它不仅要将有用的信息进行<strong>无失真、高效率的传输</strong>，而且还要在传输的过程中<strong>减少或消除无用信息和有害信息</strong>。</p>
+</li>
+<li><p>数据和信号：</p>
+<p>数据是运送<strong>信息的实体</strong>，而信号则是数据的<strong>电器的或电磁的表现</strong>。无论数据或信号，既可以是模拟的也可以是数字的。所谓“模拟的”就是连续变化的，而“数字的”就表示取值仅允许为有限的几个离散数值。</p>
+</li>
+<li><p>信道：</p>
+<p>信道一般用来表示向某一个方向传送信息的媒体，从通信的双方信息交互的方式看，可以有三种方式： </p>
+<ul>
+<li><p><strong>单工通信：</strong></p>
+<p>只有一个方向的通信而没有反方向的交互，仅需要一条信道（如无线电广播、电视广播）。</p>
+</li>
+<li><p><strong>半双工通信：</strong></p>
+<p>通信的双方都可以发送消息，但不能同时发送（如集线器）。</p>
+</li>
+<li><p><strong>全双工通信：</strong><br>通信的双方都可以同时发送和接收信息，通常需要两条信道，（如交换机）。</p>
+</li>
+</ul>
+</li>
+<li><p>码元：</p>
+<p>数字通信中对数字信号的计量单位采用码元这个概念。一个码元指的是一个固定时常的数字信号波形，该时长称为码元宽度。</p>
+</li>
+<li><p>传输速率：</p>
+<ul>
+<li><p>码元传输速率：</p>
+<p>也叫码元速率、符号速率、波形速率等，他表示<strong>单位时间内数字通信系统所传输的码元个数</strong>（符号个数或脉冲个数），单位是波特（Baud）。</p>
+</li>
+<li><p>数据传输速率：</p>
+<p>表示<strong>单位时间内数字通信系统传输的二进制码元个数</strong>，单位是bit&#x2F;s</p>
+</li>
+</ul>
+</li>
+<li><p>抖动：</p>
+<p>指在噪声因素的影响下，数字信号的有效瞬间相对于应生成理想时间位置的短时偏离，是数字通信系统中数字信号传输的一种<strong>不稳定现象</strong>。</p>
+</li>
+</ul>
+<h2 id="2-网络传输指标"><a href="#2-网络传输指标" class="headerlink" title="2.网络传输指标"></a>2.网络传输指标</h2><ul>
+<li><p>传输指标：对网络的<strong>效率和性能进行衡量</strong>。</p>
+</li>
+<li><p>带宽：</p>
+<p>指的是在<strong>一段特定的时间内网络所能传送的比特数</strong>，单位是bit&#x2F;s。</p>
+</li>
+<li><p>时延：</p>
+<p>时延指的是一个报文或者分组从一个网络一端传到另一段所需的时间。</p>
+<ul>
+<li><p><strong>发送时延</strong> &#x3D; 报文长度&#x2F;信道带宽</p>
+</li>
+<li><p><strong>传播时延</strong> &#x3D; 信道长度&#x2F;信道传播速率</p>
+</li>
+<li><p><strong>处理时延</strong> &#x3D; 数据在交换节点上为储存转发而进行一些必要的处理所花费的时间，有时可以忽略。</p>
+</li>
+<li><p><strong>总时延 &#x3D; 发送时延 + 传播时延 + 处理时延</strong></p>
+</li>
+<li><p><strong>RTT(Round-Trip Time，往返时延)</strong> 也是一个重要的性能指标，它表示从发送方发送数据开始，到发送方收到来自接收方的确认，总共经历的时延（参考Ping命令）。</p>
+</li>
+</ul>
+</li>
+<li><p>时延带宽积：</p>
+<p>时延带宽积 &#x3D; 传播时延 * 带宽，相当于第一个比特到达接收方之前，发送方最多发送的比特数。</p>
+</li>
+<li><p>误码率&#x2F;误位率：</p>
+<p>指在一定统计时间内，数字信号在传输过程中发生错误的码元&#x2F;位数与传输的总码元&#x2F;总位数之比，一般网络要求误码率低于10^-6。</p>
+</li>
+</ul>
+<h2 id="3-数据损害"><a href="#3-数据损害" class="headerlink" title="3.数据损害"></a>3.数据损害</h2><ul>
+<li><p>传输损害：常见的损害有衰减、延迟变形、噪声。</p>
+</li>
+<li><p>衰减：</p>
+<p>在任何传输介质上的信号强度<strong>随着距离的变长而衰减</strong>。</p>
+</li>
+<li><p>延迟变形：</p>
+<p>延迟变形是有线传输介质独有的现象，它是由传播速率随着频率而变化所引起的，<strong>延迟变形对数字信号的影响最大</strong>。</p>
+</li>
+<li><p>噪声：</p>
+<p>因传输系统造成的各种失真，以及突然产生了不必要的信号而产生了噪声，噪声可分为以下四种。</p>
+<ul>
+<li><p><strong>热噪声：</strong>是导体中电子的热震动引起的，它出现在所有的电子设备和传输介质中。</p>
+</li>
+<li><p><strong>内调制杂音：</strong>是当不同频率的信号同时通过一个传输介质时产生。</p>
+</li>
+<li><p><strong>串扰：</strong> 信号通路之间产生了不必要的耦合，例如双绞线之间因电耦合而产生的串扰，也有可能会在运载多个型号的同轴电缆中产生。</p>
+</li>
+<li><p><strong>脉冲噪声：</strong>因意外产生的电磁干扰，如打雷，<strong>主要影响的是数字信号</strong>。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Ⅱ-数据编码"><a href="#Ⅱ-数据编码" class="headerlink" title="Ⅱ - 数据编码"></a>Ⅱ - 数据编码</h1><h2 id="1-数字通信系统"><a href="#1-数字通信系统" class="headerlink" title="1.数字通信系统"></a>1.数字通信系统</h2><ul>
+<li><p>数字通信系统完成信号的<strong>产生、变换、传递及接收</strong>。</p>
+</li>
+<li><p>信源编码：</p>
+<p>把语音、文字、图像等<strong>模拟信号转换为数字信号</strong>及模数转换。</p>
+</li>
+<li><p>信道编码：</p>
+<p>将数字信号转换成与调制方式和传输信道匹配的形式，从而<strong>降低传输误码率，提高传输的可靠性</strong>。</p>
+</li>
+<li><p>调制：</p>
+<p>根据<strong>信道媒质特性</strong>，对编码后的数字信号还要经调制后再送入信道中，如光纤信道中的光调制，无线信道中的<strong>调频、调相、调幅</strong>等。</p>
+</li>
+<li><p>解调、信道解码和信源解码分别是调制、信道编码和信源编码的逆过程。</p>
+</li>
+</ul>
+<h2 id="2-非归零码-NRZ-I"><a href="#2-非归零码-NRZ-I" class="headerlink" title="2.非归零码 NRZ-I"></a>2.非归零码 NRZ-I</h2><ul>
+<li><p>不归零码（Non-Return to Zero Inverted，NRZ-I）又称差分码。</p>
+</li>
+<li><p>规则:</p>
+<p>出现<code>1</code>时翻转电平，出现<code>0</code>时电平不变。</p>
+</li>
+<li><p>主要用在终端到调制解调器的接口中。</p>
+<p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/NRZ-I.png" alt="NRZ-I"></p>
+</li>
+</ul>
+<h2 id="3-MLT-3编码"><a href="#3-MLT-3编码" class="headerlink" title="3.MLT-3编码"></a>3.MLT-3编码</h2><ul>
+<li><p>多电平传输码（Multi-Level Transmit -3，MLT-3）。</p>
+</li>
+<li><p>规则：</p>
+<ul>
+<li><p>如果下一输出为<code>0</code>，则电平保持不变。</p>
+</li>
+<li><p>如果下一输出为<code>1</code>，则产生跳变，但又分为两种情况。</p>
+</li>
+</ul>
+<blockquote>
+<p>（A）如果前一输出为<code>+1</code>或<code>-1</code>，则下一输出为<code>0</code>。</p>
+<p>（B）如果前一输出为<code>0</code>，则下一输出与最近一个非<code>0</code>相反。</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/MLT-3.png" alt="MLT-3"></p>
+<h2 id="4-曼彻斯特编码"><a href="#4-曼彻斯特编码" class="headerlink" title="4.曼彻斯特编码"></a>4.曼彻斯特编码</h2><ul>
+<li><p>曼切斯特编码是一种双向码，在每个比特中间均有一个跳变，第一个编码自定义。</p>
+</li>
+<li><p>规则：</p>
+<p>高 -&gt; 低 代表<code>0</code>，低 -&gt; 高 代表<code>1</code>。</p>
+</li>
+<li><p>曼切斯特编码常用于以太网中。</p>
+<p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/%E6%9B%BC%E5%BD%BB%E6%96%AF%E7%89%B9%E7%BC%96%E7%A0%81.png" alt="曼彻斯特编码"></p>
+</li>
+</ul>
+<h2 id="5-差分曼切斯特编码"><a href="#5-差分曼切斯特编码" class="headerlink" title="5.差分曼切斯特编码"></a>5.差分曼切斯特编码</h2><ul>
+<li><p>差分曼切斯特编码也是一种双向码。</p>
+</li>
+<li><p>规则：</p>
+<p>有跳变表示<code>0</code>，无跳变表示<code>1</code><strong>（有0无1）</strong>。</p>
+</li>
+<li><p>不是比较形状，是比较的始末电平，下一个起始电平与上一个终止电平一样表示<code>1</code>，有变化表示<code>0</code>。</p>
+</li>
+<li><p>根据波形，从第二个电平开始推断。</p>
+</li>
+<li><p>常用于<strong>令牌环网</strong>中。</p>
+<p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/%E5%B7%AE%E5%88%86%E6%9B%BC%E5%BD%BB%E6%96%AF%E7%89%B9%E7%BC%96%E7%A0%81.png" alt="差分曼彻斯特编码"></p>
+</li>
+</ul>
+<h2 id="6-两种曼码特点与编码效率"><a href="#6-两种曼码特点与编码效率" class="headerlink" title="6.两种曼码特点与编码效率"></a>6.两种曼码特点与编码效率</h2><ul>
+<li><p>优点：</p>
+<p>将时钟包含在信号数据流中，也称为<strong>自同步码</strong>。</p>
+</li>
+<li><p>缺点：</p>
+<p>编码效率低，每个码元都要调制为两个不同的电平，所以调制速率是码元速率的两倍，这对信道的贷款提出了更高的要求。</p>
+</li>
+<li><p>4B&#x2F;5B编码：</p>
+</li>
+<li><p>发送4bit，先用不归零码（NRZ-I），编码成5bit，多一位解决同步问题。</p>
+<table>
+<thead>
+<tr>
+<th align="center">编码类型</th>
+<th align="center">编码效率</th>
+<th align="center">应用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">曼彻斯特</td>
+<td align="center">50%</td>
+<td align="center">以太网</td>
+</tr>
+<tr>
+<td align="center">差分曼彻斯特</td>
+<td align="center">50%</td>
+<td align="center">令牌环</td>
+</tr>
+<tr>
+<td align="center">4B&#x2F;5B</td>
+<td align="center">80%</td>
+<td align="center">百兆以太网<br />（100Base-TX先4B&#x2F;5B再MLT-3）</td>
+</tr>
+<tr>
+<td align="center">8B&#x2F;10B</td>
+<td align="center">80%</td>
+<td align="center">千兆以太网</td>
+</tr>
+<tr>
+<td align="center">64B&#x2F;66B</td>
+<td align="center">97%</td>
+<td align="center">万兆以太网</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<h1 id="Ⅲ-调制技术"><a href="#Ⅲ-调制技术" class="headerlink" title="Ⅲ.调制技术"></a>Ⅲ.调制技术</h1><h2 id="1-数字调制技术"><a href="#1-数字调制技术" class="headerlink" title="1.数字调制技术"></a>1.数字调制技术</h2><ul>
+<li><p>将数字信号转换为模拟信号或是把模拟信号转换为更高频率，适合天线发送的模拟信号，称为调制，分为以下四种：</p>
+<ul>
+<li><p>幅度键控（ASK）</p>
+<blockquote>
+<p>特点：高低</p>
+</blockquote>
+<p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/ASK.png" alt="ASK"></p>
+</li>
+<li><p>频移键控（FSK）</p>
+<blockquote>
+<p>特点：快慢</p>
+</blockquote>
+<p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/FSK.png" alt="FSK"></p>
+</li>
+<li><p>相移键控（PSK）</p>
+<blockquote>
+<p>特点：形状像ASS</p>
+</blockquote>
+<p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/PSK.png" alt="PSK"></p>
+</li>
+<li><p>正交幅度调制（QAM）</p>
+<blockquote>
+<p>特点：把两个<strong>幅度相同</strong>但<strong>相位差90°</strong>的模拟信号合成一个模拟信号。</p>
+</blockquote>
+<p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/QAM.png" alt="QAM"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-扩频通信"><a href="#2-扩频通信" class="headerlink" title="2.扩频通信"></a>2.扩频通信</h2><ul>
+<li><p>为了提高通信系统的<strong>抗干扰性能</strong>，往往需要从调制和编码多方面入手，扩频通信就是方法之一。</p>
+</li>
+<li><p>扩频通信利用了<strong>扩展频谱技术</strong>，在接收端对干扰频谱能量加以扩展，对信号频谱能量压缩集中，因此在输出端就得到了信噪比的增益。</p>
+</li>
+<li><p>有如下几个技术：</p>
+<ul>
+<li><p>直接序列扩频</p>
+</li>
+<li><p>跳频 </p>
+</li>
+<li><p>跳时</p>
+</li>
+<li><p>线性调频扩频</p>
+</li>
+</ul>
+</li>
+<li><p>WLAN使用的技术是<strong>直接序列扩频和跳频扩频</strong>技术。</p>
+</li>
+</ul>
+<h1 id="Ⅳ-信道延迟"><a href="#Ⅳ-信道延迟" class="headerlink" title="Ⅳ - 信道延迟"></a>Ⅳ - 信道延迟</h1><h2 id="1-信道延时"><a href="#1-信道延时" class="headerlink" title="1.信道延时"></a>1.信道延时</h2><ul>
+<li><p>总延时 &#x3D; 线路延迟 + 发送延迟</p>
+</li>
+<li><p>线路延迟 &#x3D; 传输距离&#x2F;传输速度</p>
+</li>
+<li><p>发送延迟 &#x3D; 数据帧大小&#x2F;速率</p>
+</li>
+<li><p>光速为300m&#x2F;us &#x3D; 300000km&#x2F;s</p>
+</li>
+<li><p>电缆中的传播速度为光速的77%，为200m&#x2F;us &#x3D; 200000km&#x2F;s</p>
+</li>
+<li><p>卫星的信道时延约270ms（来回双向）</p>
+<bsp/></li>
+</ul>
+<h2 id="2-以太网报文封装"><a href="#2-以太网报文封装" class="headerlink" title="2.以太网报文封装"></a>2.以太网报文封装</h2><p><img src="/../images/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88-%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80/%E4%BB%A5%E5%A4%AA%E7%BD%91%E6%8A%A5%E6%96%87%E5%B0%81%E8%A3%85.png" alt="以太网报文封装"></p>
+<h1 id="Ⅴ-交换方式"><a href="#Ⅴ-交换方式" class="headerlink" title="Ⅴ - 交换方式"></a>Ⅴ - 交换方式</h1><h2 id="1-数据交换分类"><a href="#1-数据交换分类" class="headerlink" title="1.数据交换分类"></a>1.数据交换分类</h2><ul>
+<li><p>按通信方向分类可分为单工通信、半双工通信、全双工通信。</p>
+</li>
+<li><p>按同步方式分类可分为：</p>
+<ul>
+<li><p>异步传输：</p>
+<p>把各个字符分开传输，在字符之前插入一个起始位<code>0</code>，在字符之后插入一位停止位<code>1</code>，起始位对接收方的时钟起置位作用，在字符和停止位之间还要插入一位校验位，一般使用奇偶校验，典型的例子为ATM。</p>
+</li>
+<li><p>同步传输：</p>
+<p>传输数据帧（比特分组）要大得多，不是独立发送每个字符，而是把他们组合起来一起发送，这种组合称之为数据帧，数据帧的第一部分包含同步字符，用于通知接收方一个帧已经达到。帧的最后一部分是一个帧结束标记，典型的例子为HDLC。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-交换方式"><a href="#2-交换方式" class="headerlink" title="2.交换方式"></a>2.交换方式</h2><ul>
+<li><p>数据交换技术分为电路交换、报文交换、分组交换三种。</p>
+</li>
+<li><p>电路交换：</p>
+<p>将数据分为电路建立、数据传输、电路拆除3个过程，在数据传送之前需建立一条物理链路，在线路被释放之前，该通路将一直被用户完全占有（电话）。</p>
+</li>
+<li><p>报文交换：</p>
+<p>报文从发送方传送到接收方采用储存转发的方式，报文中含有每一个小一跳节点，完整的报文在一个个节点之间传送。</p>
+</li>
+<li><p>分组交换又分为两种方式，分别是数据包和虚电路。</p>
+</li>
+</ul>
+<h2 id="3-分组交换技术"><a href="#3-分组交换技术" class="headerlink" title="3.分组交换技术"></a>3.分组交换技术</h2><ul>
+<li><p>数据报方式（IP）：</p>
+<p>每个分组被独立地处理，每个节点根据一个路由选择算法，为每个分组选择一条路径，使他们的目的地相同。</p>
+</li>
+<li><p>虚电路方式（X.25、FR、ATM）：</p>
+<p>在数据传送之前，先建立起一条逻辑上的连接，每个分组都沿着一条路径传输。</p>
+</li>
+<li><p>分组交换的优点：</p>
+<ul>
+<li><p>减小了延迟，提高了吞吐量</p>
+</li>
+<li><p>分组交换可以按分组纠错，发现错误只需要发出错的分组，通信效率高。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Ⅵ-复用技术"><a href="#Ⅵ-复用技术" class="headerlink" title="Ⅵ - 复用技术"></a>Ⅵ - 复用技术</h1><h2 id="1-多路复用技术"><a href="#1-多路复用技术" class="headerlink" title="1.多路复用技术"></a>1.多路复用技术</h2><ul>
+<li><p>多路复用技术是<strong>把多个低速的信道组合成一个高速的信道的技术</strong>。</p>
+</li>
+<li><p>比如光纤入户后可以同时上网、网络电视、电话。</p>
+</li>
+</ul>
+<h2 id="2-频分复用技术"><a href="#2-频分复用技术" class="headerlink" title="2.频分复用技术"></a>2.频分复用技术</h2><ul>
+<li><p>频分复用技术是<strong>为用户分配不同的频带</strong>，用户在分配到一定的频带后，在通信过程中自始至终都占用这个频带。频分复用的所有用户在同样的时间占用不同的带宽资源（这里的“带宽”是频率带宽而不是数据的发送速率）向外发送数据。</p>
+<bsp/></li>
+</ul>
+<h2 id="3-时分复用技术"><a href="#3-时分复用技术" class="headerlink" title="3.时分复用技术"></a>3.时分复用技术</h2><ul>
+<li><p>时分复用是采用同一物理连接的不同时段来传输不同的信号，也能达到多路传输的目的。</p>
+<bsp/></li>
+</ul>
+<h2 id="4-波分复用"><a href="#4-波分复用" class="headerlink" title="4.波分复用"></a>4.波分复用</h2><ul>
+<li><p>波分复用的本质也是频分复用。</p>
+<bsp/>
+</li>
+<li><p>光纤频率与波长关系：光速 &#x3D; 波长 x 频率。</p>
+<bsp/></li>
+</ul>
+<h2 id="5-统计时分复用"><a href="#5-统计时分复用" class="headerlink" title="5.统计时分复用"></a>5.统计时分复用</h2><ul>
+<li><p>统计时分多路复用（Statistic TDM，STDM）是一种<strong>改进的时分复用方法</strong>，他能明显地<strong>提高信道的利用率</strong>。</p>
+<bsp/>
+</li>
+<li><p>STDM帧<strong>不是固定分配时隙，而是按需动态地分配时隙</strong>。由于用户所占用的时隙并不是周期性地出现，所以在每个时隙中还必须又用户地地址信息，这是统计时分多路复用必须要有的和不可避免地开销。</p>
+<bsp/></li>
+</ul>
+<h2 id="6-E1-与-T1"><a href="#6-E1-与-T1" class="headerlink" title="6.E1 与 T1"></a>6.E1 与 T1</h2><ul>
+<li><p>美国和日本使用T1标准，每路电话56k</p>
+<bsp/></li>
+</ul>
+<blockquote>
+<p>T1 &#x3D; 56K * <strong>24</strong> + 开销与间隔 &#x3D; <strong>1.544M</strong></p>
+</blockquote>
+<ul>
+<li><p>欧洲采用E1标准，每路电话64K，传30路电话，2路开销。</p>
+<bsp/></li>
+</ul>
+<blockquote>
+<p>E1 &#x3D; 64 * <strong>30</strong> + 64K * 2 &#x3D; <strong>2.048M</strong></p>
+</blockquote>
+<h2 id="7-同步数字序列"><a href="#7-同步数字序列" class="headerlink" title="7.同步数字序列"></a>7.同步数字序列</h2><table>
+<thead>
+<tr>
+<th align="center">光纤级</th>
+<th align="center">STS级</th>
+<th align="center">链路速Mbps</th>
+<th align="center">有效载荷Mbps</th>
+<th align="center">负载Mbps</th>
+<th align="center">SDH对应</th>
+<th align="center">常用近似值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">OC - 1</td>
+<td align="center">STS - 1</td>
+<td align="center">51.840</td>
+<td align="center">50.112</td>
+<td align="center">1.728</td>
+<td align="center">—</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><strong>OC - 3</strong></td>
+<td align="center">STS - 3</td>
+<td align="center">155.520</td>
+<td align="center">150.336</td>
+<td align="center">5.184</td>
+<td align="center"><strong>STM-1</strong></td>
+<td align="center"><strong>155Mbps</strong></td>
+</tr>
+<tr>
+<td align="center">OC - 9</td>
+<td align="center">STS - 9</td>
+<td align="center">466.560</td>
+<td align="center">451.008</td>
+<td align="center">15.552</td>
+<td align="center">STM-3</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">OC - 12</td>
+<td align="center">STS - 12</td>
+<td align="center">622.080</td>
+<td align="center">601.344</td>
+<td align="center">20.736</td>
+<td align="center">STM-4</td>
+<td align="center"><strong>622Mbps</strong></td>
+</tr>
+<tr>
+<td align="center">OC - 18</td>
+<td align="center">STS - 18</td>
+<td align="center">933.120</td>
+<td align="center">902.016</td>
+<td align="center">31.104</td>
+<td align="center">STM-6</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">OC - 24</td>
+<td align="center">STS - 24</td>
+<td align="center">1244.160</td>
+<td align="center">1202.688</td>
+<td align="center">41.472</td>
+<td align="center">STM-8</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">OC - 36</td>
+<td align="center">STS - 36</td>
+<td align="center">1866.240</td>
+<td align="center">1804.032</td>
+<td align="center">62.208</td>
+<td align="center">STM-13</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">OC - 48</td>
+<td align="center">STS - 48</td>
+<td align="center">2488.320</td>
+<td align="center">2405.376</td>
+<td align="center">82.944</td>
+<td align="center">STM-16</td>
+<td align="center"><strong>2.5Gbps</strong></td>
+</tr>
+<tr>
+<td align="center">OC - 96</td>
+<td align="center">STS - 96</td>
+<td align="center">4976.640</td>
+<td align="center">4810.752</td>
+<td align="center">165.888</td>
+<td align="center">STM-32</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">OC - 192</td>
+<td align="center">STS - 192</td>
+<td align="center">9953.280</td>
+<td align="center">9621.504</td>
+<td align="center">331.776</td>
+<td align="center">STM-64</td>
+<td align="center"><strong>10Gbps</strong></td>
+</tr>
+</tbody></table>
+<h1 id="Ⅶ-奇偶校验"><a href="#Ⅶ-奇偶校验" class="headerlink" title="Ⅶ - 奇偶校验"></a>Ⅶ - 奇偶校验</h1><h2 id="1-差错控制"><a href="#1-差错控制" class="headerlink" title="1.差错控制"></a>1.差错控制</h2><ul>
+<li><p>数据传输中错误不可避免，需要采用差错控制方法，数据通信中常用的<strong>是检错和纠错。</strong></p>
+</li>
+<li><p>奇偶校验的原理是在7位ASCII码后添一位，使<code>1</code>的个数变为奇数或偶数，从而进行奇校验或偶校验。</p>
+</li>
+<li><p>奇校验：</p>
+<p>如果现有<code>1</code>的个数为偶数，那么补一个<code>1</code>让总数变为奇数。</p>
+</li>
+<li><p>偶校验：</p>
+<p>如果现有<code>1</code>的个数为奇数，那么补一个<code>1</code>让总数变为偶数。</p>
+</li>
+</ul>
+<h1 id="Ⅷ-循环冗余校验码CRC"><a href="#Ⅷ-循环冗余校验码CRC" class="headerlink" title="Ⅷ - 循环冗余校验码CRC"></a>Ⅷ - 循环冗余校验码CRC</h1><ul>
+<li><p>末尾加入CRC循环冗余校验码能<strong>检错不能纠错</strong>，广泛用于网络通信和磁盘存储。</p>
+<bsp/></li>
+</ul>
+<p><strong>例题：</strong></p>
+<p>采用CRC进行差错校验，生成多项式为G(X) &#x3D; X^4 + X + 1，信息码字为10111，则计算出CRC校验码是（  ）。</p>
+<p>A：0000		B：0100		C：0010		D：1100</p>
+<p><strong>解题步骤：</strong></p>
+<ul>
+<li><p>1 - 判断校验位数：</p>
+<p>生成多项式的最高次方是几，校验位就是几，根据此题可知有4位检验为。</p>
+</li>
+<li><p>2 - 补齐数据位后面的0：</p>
+<p>10111 <strong>0000</strong></p>
+</li>
+<li><p>3 - 提取生成多项式的系数：</p>
+<p>G(X) &#x3D; X^4 + X + 1 &#x3D; <u>1</u> * X^4 + <u>0</u> * X^3 + <u>0</u> * X^2 + <u>1</u> * X^1 + <u>1</u> * X^0 &#x3D; 10011</p>
+</li>
+<li><p>4 - 用第二步的结果，除以第三步的结果（异或运算）所得余数就是CRC校验码，余数不够位在前面补<code>0</code>。</p>
+</li>
+</ul>
+<h1 id="Ⅸ-选择重发ARQ"><a href="#Ⅸ-选择重发ARQ" class="headerlink" title="Ⅸ - 选择重发ARQ"></a>Ⅸ - 选择重发ARQ</h1><h2 id="1-检错重发ARQ"><a href="#1-检错重发ARQ" class="headerlink" title="1.检错重发ARQ"></a>1.检错重发ARQ</h2><ul>
+<li><p>发送端经信道编码后可以发出具有检错能力的码组，接收端收到后经检测如果发现传输中有错误，则经过反馈信道把这一判断结果反馈给发送方，然后发送端把前面发出的信息重新传送一次，知道接收端认为已经正确为止。</p>
+</li>
+<li><p>常用的检错重发系统有<strong>停等重发、返回重发、选择重发</strong>三种，依赖自动重传ARQ协议（Automatic Repeat Request）。</p>
+</li>
+<li><p><strong>停等ARQ：</strong></p>
+<p>发送端向接收端发送一个码组，接收端如果未发现错误则发送一个ACK确认信号给发送端，发送端接收到ACK后再发送下一个码组；如果接收端检测出错误，则发送NAK否认信号，发送端接收到NAK后再重发前一个码组，并再次等待ACK或NAK，这种方法<strong>效率不高但工作方式简单</strong>。</p>
+</li>
+<li><p><strong>后退N帧ARQ：</strong></p>
+<p>发送端不断送出码组，不再等待ACK信号，一旦接收端发现错误并发送NAK，则发送端开始<strong>重发检测出错误的码组以及该错误码组之后的码组</strong>。</p>
+</li>
+<li><p><strong>选择重发ARQ：</strong></p>
+<p>发送端不断送出码组，接收端发现错误发送NAK信号，发送端<strong>只重发有错误的那一组</strong>，这种重发系统<strong>传输效率最高，但控制最复杂</strong>，通常卫星采用此方式来检错重发。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>1024_byteeeee
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://1024byteeeee.top/posts/1854.html" title="3.数据通信基础">https://1024byteeeee.top/posts/1854.html</a>
+  </li>
+  <li class="post-copyright-license">
+      <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E8%A7%84%E5%88%92%E8%AE%BE%E8%AE%A1%E5%B8%88/" rel="tag"># 网络规划设计师</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/1393.html" rel="prev" title="2.网络模型与体系结构">
+                  <i class="fa fa-chevron-left"></i> 2.网络模型与体系结构
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/40681.html" rel="next" title="4.传输介质">
+                  4.传输介质 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2022 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-cubes"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">1024_byteeeee</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">26k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:35</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+<div>
+<span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("10/31/2022 10:24:00");//在此处修改你的建站时间
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "已运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/1024-byteeeee" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@next-theme/pjax@0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/jquery@3.6.4/dist/jquery.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://unpkg.com/hexo-generator-searchdb@1.4.1/dist/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script src="https://unpkg.com/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: 'unset',
+  left: '32px',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '💡',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+</body>
+</html>
